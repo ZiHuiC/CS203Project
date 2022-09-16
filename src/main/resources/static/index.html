@@ -17,48 +17,35 @@
   <h1>Lend a Hand</h1>
   <h2>Idk we can have some slogan here</h2><br>
 
-
-<!--  <div>-->
-<!--    <d>Listing one</d>-->
-<!--    <d>Listing two</d>-->
-<!--    <d>Listing Three</d>-->
-<!--  </div>-->
-  <!--<code><pre>Ut sollicitudin arcu arcu, eget fermentum sem ullamcorper in.-->
-  <!--Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
-  <!--Phasellus nec nisl nunc. Sed sit amet urna arcu.-->
-  <!--Donec non consequat tortor, id fermentum felis.-->
-  <!--Quisque elementum hendrerit egestas. In id rhoncus neque, eget mattis neque.-->
-  <!--Suspendisse varius turpis et dui viverra semper.</pre></code>-->
-  <!--<hr>-->
   <br>
-<!--  <h3>Sign up</h3>-->
-<!--  <form method="post" action="">-->
-<!--    Username: <input type="text" name="demo_form_name"><br>-->
-<!--    Password: <input type="password" name="demo_form_surname"><br>-->
-<!--    <input type="submit" value="Submit form">-->
-<!--  </form>-->
+  <h3>Sign up</h3>
+  <form method="post" action="">
+    Username: <input type="text" name="demo_form_name"><br>
+    Password: <input type="password" name="demo_form_surname"><br>
+    <input type="submit" value="Submit form">
+  </form>
   <h4>Listing</h4>
-  <table>
-    <tr>
-      <th>Save the BEARS</th>
-      <th>Eat LESS MEAT</th>
-    </tr>
-    <tr>
-      <td>omg help me bears!</td>
-      <td>I BEAT my MEAT</td>
-    </tr>
-  </table>
-<!--  <h5>Heading 5</h5>-->
-<!--  <textarea rows="4" cols="16">This is a textarea.</textarea>-->
-<!--  <h6>Heading 6</h6>-->
-<!--  <ul>-->
-<!--    <li>Suspendisse convallis ac metus non efficitur.</li>-->
-<!--    <li>Donec consectetur eu nisi luctus bibendum.</li>-->
-<!--    <li>Nam tempor facilisis sem vitae mattis.</li>-->
-<!--    <li>Fusce feugiat rhoncus eros, id auctor mauris facilisis quis.</li>-->
-<!--  </ul>-->
+  <form action="/add" method="POST">
+    <p>Add a listing.</p>
+
+    <div>
+      <label for="name">Name:</label>
+      <input name="name" id="name">
+    </div>
+    <div>
+      <label for="des">Description:</label>
+      <input name="des" id="des">
+    </div>
+    <div>
+      <button>Add listing</button>
+    </div>
+  </form>
+
+  <form action="/list" method="GET">
+    <button>View listings</button>
+  </form>
   <br>
-  <div>Note, we, Lend a Hand, are not responsible for the misuse of this <a href="https://www.google.com">platform</a>.
+  <div>Note, we, Lend a Hand, are not responsible. PLease refer to <a href="https://www.google.com">documentation</a>.
   </div>
   <br>
 <!--  <button type="button">Sample button</button>-->
