@@ -1,4 +1,4 @@
-package com.csd.csd.User;
+package com.csd.user;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.csd.csd.User;
+package com.csd.user;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,14 +7,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.csd.csd.Application.Application;
-import com.csd.csd.Listing;
+import com.csd.application.Application;
+import com.csd.listing.Listing;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

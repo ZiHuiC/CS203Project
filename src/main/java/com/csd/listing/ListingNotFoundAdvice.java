@@ -1,4 +1,4 @@
-package com.csd.csd.Listing;
+package com.csd.listing;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

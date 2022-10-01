@@ -1,4 +1,4 @@
-package com.csd.csd.Listing;
+package com.csd.listing;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

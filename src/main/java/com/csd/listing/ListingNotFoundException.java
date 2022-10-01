@@ -1,4 +1,4 @@
-package com.csd.csd.Listing;
+package com.csd.listing;
 
 class ListingNotFoundException extends RuntimeException {
 

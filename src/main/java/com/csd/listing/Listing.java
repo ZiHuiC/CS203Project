@@ -1,6 +1,6 @@
-package com.csd.csd;
+package com.csd.listing;
 
-import com.csd.csd.Application.Application;
+import com.csd.application.Application;
 import lombok.Getter;
 import lombok.Setter;
 
