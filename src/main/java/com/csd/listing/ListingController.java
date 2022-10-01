@@ -9,6 +9,9 @@ import javax.validation.Valid;
 public class ListingController {
     @Autowired
     private ListingRepository listingRepository;
+    void ListingRepository(ListingRepository repository) {
+        this.listingRepository = repository;
+    }
 
     @GetMapping("/list")
     public Iterable<Listing> getListings() {
@@ -16,7 +19,7 @@ public class ListingController {
     }
 
     @PostMapping("/list")
-    public Listing addListing(@Valid @RequestBody Listing listing) {
+    public Listing addListing(@RequestBody Listing listing) {
         return listingRepository.save(listing);
     }
 
