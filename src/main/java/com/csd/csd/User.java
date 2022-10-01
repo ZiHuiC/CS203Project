@@ -3,6 +3,7 @@ package com.csd.csd;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -28,15 +29,24 @@ public class User implements UserDetails{
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", columnDefinition = "VARCHAR(255)")
     private UUID uuid;
+
     @NotNull(message = "Username should not be empty")
-    @NotBlank(message = "Username should not be blank") // do we need or frontend??
     private String username;
+
     @NotNull(message = "Password should not be empty")
     private String password;
+
     @NotNull(message = "Contact number should not be empty")
     @Size(min = 8, max = 8, message = "Contact should be 8 characters")
     private String contactNo;
+
     private String email;
+
+    @OneToMany(mappedBy = "lister", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Listing> listings;
+
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications; 
 
     @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN

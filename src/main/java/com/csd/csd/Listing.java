@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,4 +29,11 @@ public class Listing {
 
     @NotNull
     private Integer noOfParticipants;
+
+    @ManyToOne
+    @JoinColumn(name = "user_uuid", nullable = false)
+    private User lister;
+
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications;
 }
