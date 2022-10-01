@@ -3,6 +3,7 @@ package com.csd.user;
 import com.csd.application.Application;
 import com.csd.listing.Listing;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
@@ -20,7 +21,10 @@ import java.util.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+
 public class User implements UserDetails{
+    private static final long serialVersionUID = 1L;
 //    @Id
 //    @GeneratedValue(generator = "uuid2")
 //    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -29,6 +33,7 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull(message = "Username should not be empty")
     private String username;
 
@@ -51,8 +56,7 @@ public class User implements UserDetails{
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     private String authorities;
 
-    public User(String username, String password, String authorities,
-                String contactNo){
+    public User(String username, String password, String authorities, String contactNo){
         this.username = username;
         this.password = password;
         this.authorities = authorities;

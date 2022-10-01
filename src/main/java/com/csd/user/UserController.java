@@ -1,5 +1,7 @@
 package com.csd.user;
 
+import javax.validation.Valid;
+
 import com.csd.listing.Listing;
 import com.csd.listing.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ public class UserController {
     @Autowired
     private UserRepository UserRepository;
 
-    void UserRepository(UserRepository repository) {
+    public UserController(UserRepository repository) {
         this.UserRepository = repository;
     }
 
@@ -19,7 +21,7 @@ public class UserController {
 
     // Sign up
     @PostMapping("/SignUp")
-    public User addUser(@RequestBody User user) {
+    public User addUser(@Valid @RequestBody User user) {
         return UserRepository.save(user);
     }
 
