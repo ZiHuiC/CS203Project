@@ -1,6 +1,7 @@
 package com.csd.listing;
 
 import com.csd.application.Application;
+import com.csd.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
