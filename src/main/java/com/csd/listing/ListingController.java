@@ -3,7 +3,7 @@ package com.csd.listing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 public class ListingController {
@@ -13,23 +13,18 @@ public class ListingController {
         this.listingRepository = repository;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/listingpage")
     public Iterable<Listing> getListings() {
         return listingRepository.findAll();
     }
 
-    @PostMapping("/list")
+    @PostMapping("/listingpage/createlisting")
     public Listing addListing(@RequestBody Listing listing) {
         return listingRepository.save(listing);
     }
 
-    @GetMapping("/clear")
-    public void clearListings() {
-        listingRepository.deleteAll();
-    }
-
-    @GetMapping("/list/{id}")
-    public Listing findListingById(@PathVariable Long id) {
+    @GetMapping("/listingpage/{id}")
+    public Optional<Listing> findListingById(@PathVariable Long id) {
         return listingRepository.findListingById(id);
     }
 

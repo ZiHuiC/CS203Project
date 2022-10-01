@@ -32,10 +32,9 @@ public class Listing {
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
-    Listing(String name, String des) {
+    public Listing(String name, String des) {
         this.name = name;
         this.des = des;
     }
 
-    Listing(){}
 }
