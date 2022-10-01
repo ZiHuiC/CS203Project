@@ -8,19 +8,19 @@ import lombok.Setter;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @Entity // This tells Hibernate to make a table out of this class
 public class Listing {
     @Id
-    @Column(name="id", updatable=false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name="id", updatable=false, nullable = false)
     private Integer id;
-
-    @NotNull
-    @NotBlank
+//    @NotNull
+//    @NotBlank
     private String name;
     private String des;
     private Integer noOfParticipants;
@@ -32,9 +32,16 @@ public class Listing {
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
+
+    public Listing(){
+
+    }
+
     public Listing(String name, String des) {
+        super();
         this.name = name;
         this.des = des;
     }
+
 
 }
