@@ -1,9 +1,8 @@
 package com.csd.csd;
 
+import com.csd.csd.Application.Application;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
@@ -22,12 +21,7 @@ public class Listing {
     @NotNull
     @NotBlank
     private String name;
-
-    @NotNull
-    @NotBlank
     private String des;
-
-    @NotNull
     private Integer noOfParticipants;
 
     @ManyToOne

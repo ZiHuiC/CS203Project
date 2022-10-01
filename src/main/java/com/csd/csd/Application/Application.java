@@ -1,4 +1,4 @@
-package com.csd.csd;
+package com.csd.csd.Application;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.csd.csd.Listing;
+import com.csd.csd.User.User;
 import org.springframework.lang.Nullable;
 
 import lombok.Getter;

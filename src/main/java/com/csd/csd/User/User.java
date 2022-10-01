@@ -1,4 +1,4 @@
-package com.csd.csd;
+package com.csd.csd.User;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.csd.csd.Application.Application;
+import com.csd.csd.Listing;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +29,7 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", columnDefinition = "VARCHAR(255)")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID uuid;
 
     @NotNull(message = "Username should not be empty")
@@ -46,7 +48,7 @@ public class User implements UserDetails{
     private List<Listing> listings;
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Application> applications; 
+    private List<Application> applications;
 
     @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
