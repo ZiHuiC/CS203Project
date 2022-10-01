@@ -1,48 +1,33 @@
 package com.csd.csd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UUID;
+
+@Getter
+@Setter
 @Entity // This tells Hibernate to make a table out of this class
 public class Listing {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name="uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name="id", updatable=false, nullable = false)
+    private UUID id;
+
+    @NotNull
+    @NotBlank
     private String name;
+
+    @NotNull
+    @NotBlank
     private String des;
+
+    @NotNull
     private Integer noOfParticipants;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
-
-    public Integer getNoOfParticipants() {
-        return noOfParticipants;
-    }
-
-    public void setNoOfParticipants(Integer noOfParticipants) {
-        this.noOfParticipants = noOfParticipants;
-    }
 }
