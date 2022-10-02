@@ -2,6 +2,7 @@ package com.csd.user;
 
 import com.csd.application.Application;
 import com.csd.listing.Listing;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,8 +22,6 @@ import java.util.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-
 public class User implements UserDetails{
     private static final long serialVersionUID = 1L;
 //    @Id
@@ -46,6 +45,7 @@ public class User implements UserDetails{
 
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "lister", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Listing> listings;
 

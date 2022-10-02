@@ -1,8 +1,8 @@
 package com.csd.listing;
 
-class ListingNotFoundException extends RuntimeException {
+public class ListingNotFoundException extends RuntimeException {
 
-    ListingNotFoundException(Long id) {
+    public ListingNotFoundException(Long id) {
         super("Could not find listing " + id);
     }
 }
