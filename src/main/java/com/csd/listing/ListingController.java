@@ -33,31 +33,6 @@ public class ListingController {
         }).orElseThrow(() -> new UserNotFoundException(username));
     }
 
-//    @PostMapping("/listingpage/createlisting")
-//    public Listing addListing(@RequestParam String username, @RequestBody Listing listing) {
-//        // need to add the user_id to the table
-//        Optional<User> u = users.findByUsername(username);
-//        if (u.isEmpty())
-//            throw new UserNotFoundException(username);
-//
-//        if (u.get().getListings().contains(listing))
-//            throw new ListingAlreadyExistException(listing.getId());
-//
-//        u.get().getListings().add(listing);
-//        users.save(u.get());
-//        listing.setLister(u.get());
-//        return listings.save(listing);
-//    }
-
-
-
-    // save lister nullable = true
-//    @PostMapping("/listingpage/createlisting")
-//    public Listing addListing(@RequestBody Listing listing) {
-//        // need to add the user_id to the table
-//        return listings.save(listing);
-//    }
-
     @GetMapping("/listingpage/{id}")
     public Optional<Listing> findListingById(@PathVariable Long id) {
         return listings.findListingById(id);

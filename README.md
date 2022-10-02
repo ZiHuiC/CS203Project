@@ -1,7 +1,7 @@
 # CS203Project
-# Important notice 
-Hey guys, Eunice farted -13/09/22
-#
-There is something under my bed
-#
-Eat my buttock
+# Lend a Hand
+Started on DD/MM/YYYY
+
+# 02/10/2022 - Add Listings!
+Guys, FINALLY! We have the feature of adding LISTINGS!
+Be excites!!!!! @JsonIgnore was the answer lmaooo ~ Adrian
