@@ -20,6 +20,7 @@ public class ListingController {
 
     @PostMapping("/listingpage/createlisting")
     public Listing addListing(@RequestBody Listing listing) {
+        // need to add the user_id to the table
         return listingRepository.save(listing);
     }
 

@@ -26,25 +26,10 @@ public class UserController {
     }
 
     @GetMapping("/profiles")
-    public Iterable<User> getUser() {
+    public Iterable<User> getUsers() {
         return UserRepository.findAll();
     }
-//
-//
-//    @GetMapping("/listingpage")
-//    public Iterable<Listing> getListings() {
-//        return listingRepository.findAll();
-//    }
-//
-//    @PostMapping("/listingpage/createlisting")
-//    public Listing addListing(@RequestBody Listing listing) {
-//        return listingRepository.save(listing);
-//    }
-//
-//    @GetMapping("/listingpage/{id}")
-//    public Listing findListingById(@PathVariable Long id) {
-//        return listingRepository.findListingById(id);
-//    }
+
 
 
 }
