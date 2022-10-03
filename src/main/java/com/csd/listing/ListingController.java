@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 public class ListingController {
     private ListingRepository listings;
-
     private UserRepository users;
+
     public ListingController(ListingRepository listings, UserRepository users) {
         this.listings = listings;
         this.users = users;

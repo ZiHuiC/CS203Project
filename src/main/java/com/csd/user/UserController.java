@@ -7,6 +7,9 @@ import com.csd.listing.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+//to permit cross origin communication
+@CrossOrigin(origins = "http://localhost:3000")
+
 @RestController
 public class UserController {
     private UserRepository UserRepository;
@@ -16,10 +19,10 @@ public class UserController {
     }
 
     // Login
-//    @GetMapping("/Login")
+//    @GetMapping("/login")
 
     // Sign up
-    @PostMapping("/SignUp")
+    @PostMapping("/signup")
     public User addUser(@Valid @RequestBody User user) {
         return UserRepository.save(user);
     }

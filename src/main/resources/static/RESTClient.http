@@ -1,6 +1,5 @@
-POST http://localhost:8080/SignUp
+POST http://localhost:8080/signup
 Content-Type: application/json
-
 
 {
     "username" : "username",
@@ -8,3 +7,34 @@ Content-Type: application/json
     "authorities" : "authorities",
     "contactNo" : "12345678"
 }
+###
+GET http://localhost:8080/profiles
+Content-Type: application/json
+###
+GET http://localhost:8080/listingpage
+Content-Type: application/json
+###
+GET http://localhost:8080/listingpage/1
+Content-Type: application/json
+###
+POST http://localhost:8080/listingpage/createlisting?username=admin
+Content-Type: application/json
+
+{
+    "name" : "Clean da bij",
+    "des" : "We clean da bij"
+}
+###
+POST http://localhost:8080/listingpage/1/apply
+Content-Type: application/json
+
+{
+    "message" : "I will clean da bij"
+}
+###
+GET http://localhost:8080/user/applications?username=admin
+Content-Type: application/json
+
+###
+GET http://localhost:8080/application/1
+Content-Type: application/json

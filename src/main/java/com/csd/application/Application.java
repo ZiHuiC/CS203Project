@@ -30,10 +30,14 @@ public class Application {
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "applicant_uuid", nullable = false)
+    @JoinColumn(name = "applicant_id", nullable = false)
     private User applicant;
 
     @ManyToOne
     @JoinColumn(name = "listing_id", nullable = false)
     private Listing listing;
+
+    public Application(String message){
+        this.message = message;
+    }
 }

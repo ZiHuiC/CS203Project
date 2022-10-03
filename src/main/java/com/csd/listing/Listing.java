@@ -34,7 +34,7 @@ public class Listing {
 
     // please set nullable to false. Set to true now so that we can add listing without users
     @ManyToOne
-    @JoinColumn(name = "user_uuid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User lister;
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)

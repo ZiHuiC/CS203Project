@@ -11,10 +11,10 @@ import org.springframework.context.ApplicationContext;
 public class CsdApplication {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(CsdApplication.class, args);
-		// JPA book repository init
+		// JPA user repository init
         UserRepository users = ctx.getBean(UserRepository.class);
         System.out.println("[Add user]: " +
-				users.save(new User("user", "goodpassword", "ROLE_ADMIN", "12345678" )).getUsername());
+				users.save(new User("admin", "goodpassword", "ROLE_ADMIN", "12345678" )).getUsername());
 	}
 
 

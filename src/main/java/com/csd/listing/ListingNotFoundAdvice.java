@@ -12,7 +12,7 @@ class ListingNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(ListingNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(ListingNotFoundException ex) {
+    String listingNotFoundHandler(ListingNotFoundException ex) {
         return ex.getMessage();
     }
 }
