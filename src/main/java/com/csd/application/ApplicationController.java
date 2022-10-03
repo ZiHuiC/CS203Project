@@ -31,6 +31,7 @@ public class ApplicationController {
         this.users = users;
     }
 
+    //not working
     @GetMapping("/application/{id}")
     public Optional<Application> findApplicationById(@PathVariable Long id) {
         return applications.findApplicationById(id);
@@ -38,6 +39,7 @@ public class ApplicationController {
 
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
+    //not working
     @GetMapping("/user/applications") // need fixing???
     public Iterable<Application> getApplications(@RequestParam String username) {
         return users.findByUsername(username).map(user -> {
@@ -45,7 +47,7 @@ public class ApplicationController {
         }).orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    @PostMapping("/listingpage/{id}/apply")
+    @PostMapping("/listingpage/{listingid}/apply")
     public Application addApplication(@RequestParam String username, @PathVariable Long listingid, 
             @RequestBody Application application) {
         // 
@@ -53,7 +55,7 @@ public class ApplicationController {
             application.setApplicant(user);
             listings.findById(listingid).map(listing -> {
                 application.setListing(listing);
-                return null;
+                return listing;
             }).orElseThrow(() -> new ListingNotFoundException(listingid));
             
             return applications.save(application);

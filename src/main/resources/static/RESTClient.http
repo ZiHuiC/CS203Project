@@ -25,7 +25,7 @@ Content-Type: application/json
     "des" : "We clean da bij"
 }
 ###
-POST http://localhost:8080/listingpage/1/apply
+POST http://localhost:8080/listingpage/1/apply?username=admin
 Content-Type: application/json
 
 {
