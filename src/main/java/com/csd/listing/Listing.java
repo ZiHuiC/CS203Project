@@ -2,12 +2,10 @@ package com.csd.listing;
 
 import com.csd.application.Application;
 import com.csd.user.User;
-import com.csd.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -31,14 +29,27 @@ public class Listing {
     private String des;
     private Integer noOfParticipants = -1; // -1 means unlimited
 
-
-    // please set nullable to false. Set to true now so that we can add listing without users
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User lister;
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
+
+//    @OneToMany(mappedBy = "listing")
+//    private Set<Application> listingApplications;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "lister_id", nullable = false)
+//    private User lister;
+
+//    @CreatedDate
+//    @Column(nullable = false, updatable = false)
+//    private OffsetDateTime dateCreated;
+//
+//    @LastModifiedDate
+//    @Column(nullable = false)
+//    private OffsetDateTime lastUpdated;
 
     public Listing(String name, String des) {
         this.name = name;

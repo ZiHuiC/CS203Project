@@ -1,11 +1,6 @@
 package com.csd.application;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.csd.listing.Listing;
 import com.csd.user.User;
@@ -29,13 +24,29 @@ public class Application {
     @Nullable
     private String message;
 
-    @ManyToOne
+//    @ManyToOne
+//    @JoinColumn(name = "applicant_id", nullable = false)
+//    private User applicant;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "listing_id", nullable = false)
+//    private Listing listing;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id", nullable = false)
     private User applicant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listing_id", nullable = false)
     private Listing listing;
+
+//    @CreatedDate
+//    @Column(nullable = false, updatable = false)
+//    private OffsetDateTime dateCreated;
+//
+//    @LastModifiedDate
+//    @Column(nullable = false)
+//    private OffsetDateTime lastUpdated;
 
     public Application(String message){
         this.message = message;

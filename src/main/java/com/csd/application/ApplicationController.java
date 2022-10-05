@@ -8,6 +8,7 @@ import com.csd.user.UserNotFoundException;
 import com.csd.user.UserRepository;
 import com.csd.listing.ListingNotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,18 +49,20 @@ public class ApplicationController {
     }
 
     @PostMapping("/listingpage/{listingid}/apply")
-    public Application addApplication(@RequestParam String username, @PathVariable Long listingid, 
+    public Long addApplication(@RequestParam String username, @PathVariable Long listingid,
             @RequestBody Application application) {
-        // 
-        return users.findByUsername(username).map(user -> {
-            application.setApplicant(user);
-            listings.findById(listingid).map(listing -> {
-                application.setListing(listing);
-                return listing;
-            }).orElseThrow(() -> new ListingNotFoundException(listingid));
-            
-            return applications.save(application);
-        }).orElseThrow(() -> new UserNotFoundException(username));
+        var user = users.findByUsername(username);
+        if (user.isEmpty())
+            throw new UserNotFoundException(username);
+
+        var listing = listings.findListingById(listingid);
+        if (listing.isEmpty())
+            throw new ListingNotFoundException(listingid);
+
+        var listingVal = listing.get();
+        application.setApplicant(user.get());
+        application.setListing(listingVal);
+        return applications.save(application).getId();
     }
 
 

@@ -4,11 +4,9 @@ import com.csd.application.Application;
 import com.csd.listing.Listing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,8 +47,23 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "lister", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Listing> listings;
 
+
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
+
+//    @OneToMany(mappedBy = "applicant")
+//    private Set<Application> applicantApplications;
+//
+//    @OneToMany(mappedBy = "lister")
+//    private Set<Listing> listerListings;
+
+//    @CreatedDate
+//    @Column(nullable = false, updatable = false)
+//    private OffsetDateTime dateCreated;
+//
+//    @LastModifiedDate
+//    @Column(nullable = false)
+//    private OffsetDateTime lastUpdated;
 
     @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
