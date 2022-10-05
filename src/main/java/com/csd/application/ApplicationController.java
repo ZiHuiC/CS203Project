@@ -2,13 +2,11 @@ package com.csd.application;
 
 import java.util.Optional;
 
-import com.csd.listing.Listing;
 import com.csd.listing.ListingRepository;
 import com.csd.user.UserNotFoundException;
 import com.csd.user.UserRepository;
 import com.csd.listing.ListingNotFoundException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ApplicationController {
-    private ApplicationRepository applications;
-    private ListingRepository listings;
-    private UserRepository users;
+    private final ApplicationRepository applications;
+    private final ListingRepository listings;
+    private final UserRepository users;
 
     public ApplicationController(ApplicationRepository applications, ListingRepository listings, UserRepository users){
         this.applications = applications;
@@ -32,7 +30,6 @@ public class ApplicationController {
         this.users = users;
     }
 
-    //not working
     @GetMapping("/application/{id}")
     public Optional<Application> findApplicationById(@PathVariable Long id) {
         return applications.findApplicationById(id);
@@ -40,20 +37,19 @@ public class ApplicationController {
 
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
-    //not working
-    @GetMapping("/user/applications") // need fixing???
-    public Iterable<Application> getApplications(@RequestParam String username) {
-        return users.findByUsername(username).map(user -> {
-            return applications.findAllByApplicant(user);
-        }).orElseThrow(() -> new UserNotFoundException(username));
+    @GetMapping("/user/applications")
+    public Iterable<Application> getApplications(@RequestParam Long userId) {
+        return users.findById(userId).map(
+                applications::findAllByApplicant).orElseThrow(() ->
+                new UserNotFoundException(userId));
     }
 
     @PostMapping("/listingpage/{listingid}/apply")
-    public Long addApplication(@RequestParam String username, @PathVariable Long listingid,
+    public Long addApplication(@RequestParam Long userId, @PathVariable Long listingid,
             @RequestBody Application application) {
-        var user = users.findByUsername(username);
+        var user = users.findById(userId);
         if (user.isEmpty())
-            throw new UserNotFoundException(username);
+            throw new UserNotFoundException(userId);
 
         var listing = listings.findListingById(listingid);
         if (listing.isEmpty())

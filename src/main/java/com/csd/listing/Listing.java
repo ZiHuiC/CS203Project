@@ -36,21 +36,6 @@ public class Listing {
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
-//    @OneToMany(mappedBy = "listing")
-//    private Set<Application> listingApplications;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "lister_id", nullable = false)
-//    private User lister;
-
-//    @CreatedDate
-//    @Column(nullable = false, updatable = false)
-//    private OffsetDateTime dateCreated;
-//
-//    @LastModifiedDate
-//    @Column(nullable = false)
-//    private OffsetDateTime lastUpdated;
-
     public Listing(String name, String des) {
         this.name = name;
         this.des = des;

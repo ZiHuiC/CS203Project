@@ -20,33 +20,14 @@ public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Nullable
     private String message;
-
-//    @ManyToOne
-//    @JoinColumn(name = "applicant_id", nullable = false)
-//    private User applicant;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "listing_id", nullable = false)
-//    private Listing listing;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id", nullable = false)
     private User applicant;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "listing_id", nullable = false)
     private Listing listing;
-
-//    @CreatedDate
-//    @Column(nullable = false, updatable = false)
-//    private OffsetDateTime dateCreated;
-//
-//    @LastModifiedDate
-//    @Column(nullable = false)
-//    private OffsetDateTime lastUpdated;
 
     public Application(String message){
         this.message = message;

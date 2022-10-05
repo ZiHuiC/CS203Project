@@ -13,11 +13,30 @@ public class CsdApplication {
 		ApplicationContext ctx = SpringApplication.run(CsdApplication.class, args);
 		// JPA user repository init
         UserRepository users = ctx.getBean(UserRepository.class);
-//        System.out.println("[Add user]: " +
-//				users.save(new User("admin", "goodpassword", "12345678", "email@gmail.email", "ROLE_ADMIN", "cheko", "pek")).getUsername());
-//		System.out.println("[Add user]: " +
-//				users.save(new User("tommy", "goodpassword", "12345678", "email@gmail.email", "ROLE_USER", "cheko", "pek")).getUsername());
+        if (users.findByUsername("admin@lendahand.com").isEmpty())
+			System.out.println("[Add user]: " +
+					users.save(new User(
+							"admin@lendahand.com",
+							"password",
+							"firstname",
+							"lastname",
+							"62353535",
+							"AUTH_ADMIN"
+					)).getUsername());
+		else
+			System.out.println("Admin already added");
+
+		if (users.findByUsername("user@gmail.com").isEmpty())
+			System.out.println("[Add user]: " +
+					users.save(new User(
+							"user@gmail.com",
+							"password",
+							"firstname",
+							"lastname",
+							"62353535",
+							"AUTH_USER"
+					)).getUsername());
+		else
+			System.out.println("User already added");
 	}
-
-
 }

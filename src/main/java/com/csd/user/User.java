@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.util.*;
 
 @Getter
@@ -21,6 +22,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails{
+    @Serial
     private static final long serialVersionUID = 1L;
 //    @Id
 //    @GeneratedValue(generator = "uuid2")
@@ -37,11 +39,15 @@ public class User implements UserDetails{
     @NotNull(message = "Password should not be empty")
     private String password;
 
+    @NotNull(message = "First name should not be empty")
+    private String firstname;
+
+    @NotNull(message = "Last name should not be empty")
+    private String lastname;
+
     @NotNull(message = "Contact number should not be empty")
     @Size(min = 8, max = 8, message = "Contact should be 8 characters")
     private String contactNo;
-
-    private String email;
 
     @JsonIgnore
     @OneToMany(mappedBy = "lister", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -51,30 +57,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
-//    @OneToMany(mappedBy = "applicant")
-//    private Set<Application> applicantApplications;
-//
-//    @OneToMany(mappedBy = "lister")
-//    private Set<Listing> listerListings;
-
-//    @CreatedDate
-//    @Column(nullable = false, updatable = false)
-//    private OffsetDateTime dateCreated;
-//
-//    @LastModifiedDate
-//    @Column(nullable = false)
-//    private OffsetDateTime lastUpdated;
-
     @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     private String authorities;
-
-    public User(String username, String password, String authorities, String contactNo){
-        this.username = username;
-        this.password = password;
-        this.authorities = authorities;
-        this.contactNo = contactNo;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,5 +95,14 @@ public class User implements UserDetails{
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public User(String username, String password, String firstname, String lastname, String contactNo, String authorities) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.contactNo = contactNo;
+        this.authorities = authorities;
     }
 }

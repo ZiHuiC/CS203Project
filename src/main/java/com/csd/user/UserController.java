@@ -2,17 +2,16 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
-import com.csd.listing.Listing;
-import com.csd.listing.ListingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 //to permit cross origin communication
 @CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 public class UserController {
-    private UserRepository UserRepository;
+    private final UserRepository UserRepository;
 
     public UserController(UserRepository repository) {
         this.UserRepository = repository;
@@ -28,8 +27,12 @@ public class UserController {
     }
 
     @GetMapping("/profiles")
-    public Iterable<User> getUsers() {
-        return UserRepository.findAll();
+    public Iterable<Object> getUsers() {
+        var allUsers = UserRepository.findAll();
+        var usernames = new ArrayList<>();
+        for (User u : allUsers)
+            usernames.add(u.getUsername());
+        return usernames;
     }
 
 
