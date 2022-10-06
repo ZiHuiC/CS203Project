@@ -58,8 +58,9 @@ public class User implements UserDetails{
     private List<Application> applications;
 
     @NotNull(message = "Authorities should not be null")
-    // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
-    private String authorities;
+    // We define two roles/authorities: AUTH_USER or AUTH_ADMIN
+    // default is AUTH_USER
+    private String authorities = "AUTH_USER";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

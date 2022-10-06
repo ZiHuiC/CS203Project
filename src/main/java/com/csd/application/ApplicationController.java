@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-// need to change to correct port 5507 i think
-@CrossOrigin(origins = "http://localhost:3000")
+// to communiciate with frontend
+@CrossOrigin(origins = "http://localhost:5173")
 
 @RestController
 public class ApplicationController {

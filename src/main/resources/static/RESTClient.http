@@ -1,40 +1,58 @@
+
+#when gettin info about all user profiles
+GET http://localhost:8080/profiles
+Content-Type: application/json
+
+###
+#when gettin info adding a user
 POST http://localhost:8080/signup
 Content-Type: application/json
 
 {
-    "username" : "username",
-    "password" : "password",
-    "authorities" : "authorities",
-    "contactNo" : "12345678"
+    "username" : "a string(email)",
+    "password" : "a string",
+    "firstname" : "string",
+    "lastname" : "string",
+    "contactNo" : "12345678",
+    "authorities" : "AUTH_USER OR AUTH_ADMIN"
+    
 }
+
 ###
-GET http://localhost:8080/profiles
-Content-Type: application/json
-###
+#get all listings
 GET http://localhost:8080/listingpage
 Content-Type: application/json
+
 ###
+
+#get a listings based on its id
 GET http://localhost:8080/listingpage/1
 Content-Type: application/json
 ###
-POST http://localhost:8080/listingpage/createlisting?username=admin
+#put user id in the {id}
+POST http://localhost:8080/listingpage/createlisting?userId=1
 Content-Type: application/json
 
 {
-    "name" : "Clean da bij",
-    "des" : "We clean da bij"
+    "name" : "string",
+    "des" : "string"
 }
-###
-POST http://localhost:8080/listingpage/1/apply?username=admin
-Content-Type: application/json
 
-{
-    "message" : "I will clean da bij"
-}
 ###
-GET http://localhost:8080/user/applications?username=admin
+#put user id in the {id}
+GET http://localhost:8080/user/applications?userId=1
 Content-Type: application/json
 
 ###
+#put application id in the {id}
 GET http://localhost:8080/application/1
 Content-Type: application/json
+
+###
+#put the corresponding ids in the {}
+POST http://localhost:8080/listingpage/1/apply?userId=1
+Content-Type: application/json
+
+{
+    "message" : "string"
+}

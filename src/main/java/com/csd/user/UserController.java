@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //to permit cross origin communication
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:5173")
 
 @RestController
 public class UserController {
-    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
 
     public UserController(UserRepository repository) {
-        this.UserRepository = repository;
+        this.userRepository = repository;
     }
 
     // Login
@@ -25,12 +25,12 @@ public class UserController {
     // Sign up
     @PostMapping("/signup")
     public UserDTO addUser(@Valid @RequestBody User user) {
-        return new UserDTO(UserRepository.save(user));
+        return new UserDTO(userRepository.save(user));
     }
 
     @GetMapping("/profiles")
     public List<UserDTO> getUsers() {
-        return UserRepository.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
 
