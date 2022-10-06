@@ -5,6 +5,8 @@ import com.csd.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000")
 
@@ -18,30 +20,24 @@ public class ListingController {
         this.users = users;
     }
     @GetMapping("/listingpage")
-    public Iterable<Object> getListings() {
-        var allListings = listings.findAll();
-        var listingNames = new ArrayList<>();
-        for (Listing l : allListings) {
-            listingNames.add(l.getName());
-        }
-        return (Iterable<Object>) listingNames;
+    public List<ListingDTO> getListings() {
+        return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping("/listingpage/createlisting")
-    public Long addListing(@RequestParam Long userId, @RequestBody Listing listing) {
+    public ListingDTO addListing(@RequestParam Long userId, @RequestBody Listing listing) {
         // need to add the user_id to the table
         return users.findById(userId).map(user -> {
             listing.setLister(user);
-            return listings.save(listing);
-        }).orElseThrow(() -> new UserNotFoundException(userId)).getId();
+            return new ListingDTO(listings.save(listing));
+        }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     @GetMapping("/listingpage/{id}")
-    public String findListingById(@PathVariable Long id) {
+    public ListingDTO findListingById(@PathVariable Long id) {
         if (listings.findListingById(id).isEmpty())
             throw new ListingNotFoundException(id);
-        var listing = listings.findListingById(id).get();
-        return listing.getName() + ",\n" + listing.getDes() + ",\n" + listing.getLister().getUsername();
+        return new ListingDTO(listings.findListingById(id).get());
     }
 
 }

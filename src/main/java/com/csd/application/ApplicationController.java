@@ -1,6 +1,8 @@
 package com.csd.application;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.csd.listing.ListingRepository;
 import com.csd.user.UserNotFoundException;
@@ -31,21 +33,25 @@ public class ApplicationController {
     }
 
     @GetMapping("/application/{id}")
-    public Optional<Application> findApplicationById(@PathVariable Long id) {
-        return applications.findApplicationById(id);
+    public ApplicationDTO findApplicationById(@PathVariable Long id) {
+        var application = applications.findApplicationById(id);
+        if (application.isEmpty())
+            throw new ApplicationNotFoundException(id);
+        return new ApplicationDTO(application.get());
     }
 
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
     @GetMapping("/user/applications")
-    public Iterable<Application> getApplications(@RequestParam Long userId) {
-        return users.findById(userId).map(
-                applications::findAllByApplicant).orElseThrow(() ->
-                new UserNotFoundException(userId));
+    public List<ApplicationDTO> getApplications(@RequestParam Long userId) {
+        var user = users.findById(userId);
+        if (user.isEmpty())
+            throw new UserNotFoundException(userId);
+        return user.get().getApplications().stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping("/listingpage/{listingid}/apply")
-    public Long addApplication(@RequestParam Long userId, @PathVariable Long listingid,
+    public ApplicationDTO addApplication(@RequestParam Long userId, @PathVariable Long listingid,
             @RequestBody Application application) {
         var user = users.findById(userId);
         if (user.isEmpty())
@@ -58,7 +64,7 @@ public class ApplicationController {
         var listingVal = listing.get();
         application.setApplicant(user.get());
         application.setListing(listingVal);
-        return applications.save(application).getId();
+        return new ApplicationDTO(applications.save(application));
     }
 
 
