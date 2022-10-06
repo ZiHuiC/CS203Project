@@ -19,11 +19,13 @@ public class ListingController {
         this.listings = listings;
         this.users = users;
     }
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/listingpage")
     public List<ListingDTO> getListings() {
         return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/listingpage/createlisting")
     public ListingDTO addListing(@RequestParam Long userId, @RequestBody Listing listing) {
         // need to add the user_id to the table
@@ -32,7 +34,7 @@ public class ListingController {
             return new ListingDTO(listings.save(listing));
         }).orElseThrow(() -> new UserNotFoundException(userId));
     }
-
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/listingpage/{id}")
     public ListingDTO findListingById(@PathVariable Long id) {
         if (listings.findListingById(id).isEmpty())
