@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // to communiciate with frontend
-@CrossOrigin(origins = "http://localhost:5173")
-
+@CrossOrigin
 @RestController
 public class ApplicationController {
     private final ApplicationRepository applications;
@@ -32,7 +31,6 @@ public class ApplicationController {
         this.users = users;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/application/{id}")
     public ApplicationDTO findApplicationById(@PathVariable Long id) {
         var application = applications.findApplicationById(id);
@@ -43,7 +41,6 @@ public class ApplicationController {
 
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/user/applications")
     public List<ApplicationDTO> getApplications(@RequestParam Long userId) {
         var user = users.findById(userId);
@@ -52,7 +49,6 @@ public class ApplicationController {
         return user.get().getApplications().stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/listingpage/{listingid}/apply")
     public ApplicationDTO addApplication(@RequestParam Long userId, @PathVariable Long listingid,
             @RequestBody Application application) {
