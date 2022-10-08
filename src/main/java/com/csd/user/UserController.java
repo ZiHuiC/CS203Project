@@ -2,6 +2,7 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController {
     private final UserRepository userRepository;
+    private BCryptPasswordEncoder encoder;
 
-    public UserController(UserRepository repository) {
+    public UserController(UserRepository repository, BCryptPasswordEncoder encoder){
         this.userRepository = repository;
+        this.encoder = encoder;
     }
 
     // Login
@@ -23,6 +26,8 @@ public class UserController {
     // Sign up
     @PostMapping("/signup")
     public UserDTO addUser(@Valid @RequestBody User user) {
+        // for BCrypt authorization
+        user.setPassword(encoder.encode(user.getPassword()));
         return new UserDTO(userRepository.save(user));
     }
 

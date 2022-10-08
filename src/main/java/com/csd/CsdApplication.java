@@ -6,6 +6,7 @@ import com.csd.user.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class CsdApplication {
@@ -13,15 +14,16 @@ public class CsdApplication {
 		ApplicationContext ctx = SpringApplication.run(CsdApplication.class, args);
 		// JPA user repository init
         UserRepository users = ctx.getBean(UserRepository.class);
+		BCryptPasswordEncoder encoder = ctx.getBean(BCryptPasswordEncoder.class);
         if (users.findByUsername("admin@lendahand.com").isEmpty())
 			System.out.println("[Add user]: " +
 					users.save(new User(
 							"admin@lendahand.com",
-							"password",
+							encoder.encode("password"),
 							"firstname",
 							"lastname",
 							"62353535",
-							"AUTH_ADMIN"
+							"ROLE_ADMIN"
 					)).getUsername());
 		else
 			System.out.println("Admin already added");
@@ -30,11 +32,11 @@ public class CsdApplication {
 			System.out.println("[Add user]: " +
 					users.save(new User(
 							"user@gmail.com",
-							"password",
+							encoder.encode("password"),
 							"firstname",
 							"lastname",
 							"62353535",
-							"AUTH_USER"
+							"ROLE_USER"
 					)).getUsername());
 		else
 			System.out.println("User already added");

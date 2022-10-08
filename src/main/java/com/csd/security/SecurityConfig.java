@@ -63,17 +63,20 @@ public class SecurityConfig {
                 .httpBasic()
                 .and() //  "and()"" method allows us to continue configuring the parent
                 //jwt authentication
-                // .authorizeRequests()
+                .authorizeRequests()
                 // .mvcMatchers("/signup").permitAll()
                 // .mvcMatchers("/profiles").authenticated()
                 // .and().cors()
                 // .and().oauth2ResourceServer().jwt()
-//                .antMatchers(HttpMethod.POST, "/books/*/reviews").hasAnyRole("ADMIN", "USER")
-//                .antMatchers(HttpMethod.PUT, "/books/*/reviews/*").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/books/*/reviews/*").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
-                // .and()
+
+                .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/listingpage").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/listingpage/createlisting*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/listingpage/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/application/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/user/applications*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/listingpage/*/apply*").hasAnyRole("USER", "ADMIN")
+                .and()
                 .authenticationProvider(authenticationProvider()) //specifies the authentication provider for HttpSecurity
                 .csrf().disable() // CSRF protection is needed only for browser based attacks
                 .formLogin().disable()

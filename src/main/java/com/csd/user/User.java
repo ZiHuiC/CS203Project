@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +20,7 @@ import java.io.Serial;
 import java.util.*;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -58,9 +61,9 @@ public class User implements UserDetails{
     private List<Application> applications;
 
     // @NotNull(message = "Authorities should not be null")
-    // We define two roles/authorities: AUTH_USER or AUTH_ADMIN
+    // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     // default is AUTH_USER
-    private String authorities = "AUTH_USER";
+    private String authorities = "ROLE_USER";
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

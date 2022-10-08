@@ -4,6 +4,11 @@ GET http://localhost:8080/profiles
 Content-Type: application/json
 
 ###
+#when gettin info about all user profiles
+GET http://localhost:8080/profiles
+Content-Type: application/json
+Authorization: Basic admin@lendahand.com password
+###
 GET http://localhost:8080/user/admin@lendahand.com
 Content-Type: application/json
 
@@ -17,9 +22,7 @@ Content-Type: application/json
     "password" : "a string",
     "firstname" : "string",
     "lastname" : "string",
-    "contactNo" : "12345678",
-    "authorities" : "AUTH_USER OR AUTH_ADMIN"
-    
+    "contactNo" : "12345678"
 }
 
 ###
