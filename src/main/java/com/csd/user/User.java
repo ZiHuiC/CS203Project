@@ -57,7 +57,7 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
-    @NotNull(message = "Authorities should not be null")
+    // @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: AUTH_USER or AUTH_ADMIN
     // default is AUTH_USER
     private String authorities = "AUTH_USER";
@@ -97,7 +97,7 @@ public class User implements UserDetails{
     public int hashCode() {
         return getClass().hashCode();
     }
-
+    // only used when creating admin
     public User(String username, String password, String firstname, String lastname, String contactNo, String authorities) {
         this.username = username;
         this.password = password;
@@ -105,5 +105,13 @@ public class User implements UserDetails{
         this.lastname = lastname;
         this.contactNo = contactNo;
         this.authorities = authorities;
+    }
+    // for creating users, default authority is user
+    public User(String username, String password, String firstname, String lastname, String contactNo) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.contactNo = contactNo;
     }
 }

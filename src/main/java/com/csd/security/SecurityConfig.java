@@ -1,5 +1,6 @@
 package com.csd.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,22 +9,30 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    protected void configure(HttpSecurity security) throws Exception
-    {
-        security.httpBasic().disable();
-    }
+    // @Value("${auth0.audience}")
+    // private String audience;
+
+    // @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    // private String issuer;
+
     private final UserDetailsService userDetailsService;
 
     public SecurityConfig(UserDetailsService userSvc){
         this.userDetailsService = userSvc;
     }
 
+    protected void configure(HttpSecurity security) throws Exception
+    {
+        security.httpBasic().disable();
+    }
     /**
      * Exposes a bean of DaoAuthenticationProvider, a type of AuthenticationProvider
      * Attaches the user details and the password encoder
@@ -52,18 +61,19 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic()
-//                .and() //  "and()"" method allows us to continue configuring the parent
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.PUT, "/books/*").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/books/*").hasRole("ADMIN")
-//                // your code here
+                .and() //  "and()"" method allows us to continue configuring the parent
+                //jwt authentication
+                // .authorizeRequests()
+                // .mvcMatchers("/signup").permitAll()
+                // .mvcMatchers("/profiles").authenticated()
+                // .and().cors()
+                // .and().oauth2ResourceServer().jwt()
 //                .antMatchers(HttpMethod.POST, "/books/*/reviews").hasAnyRole("ADMIN", "USER")
 //                .antMatchers(HttpMethod.PUT, "/books/*/reviews/*").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/books/*/reviews/*").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
 //                .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
-                .and()
+                // .and()
                 .authenticationProvider(authenticationProvider()) //specifies the authentication provider for HttpSecurity
                 .csrf().disable() // CSRF protection is needed only for browser based attacks
                 .formLogin().disable()
@@ -80,4 +90,23 @@ public class SecurityConfig {
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // @Bean
+    // JwtDecoder jwtDecoder() {
+    //     /*
+    //     By default, Spring Security does not validate the "aud" claim of the token, to ensure that this token is
+    //     indeed intended for our app. Adding our own validator is easy to do:
+    //     */
+
+    //     NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
+    //             JwtDecoders.fromOidcIssuerLocation(issuer);
+
+    //     OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
+    //     OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
+    //     OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
+
+    //     jwtDecoder.setJwtValidator(withAudience);
+
+    //     return jwtDecoder;
+    // }
 }

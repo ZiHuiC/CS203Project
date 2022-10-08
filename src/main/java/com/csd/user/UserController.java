@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,14 @@ public class UserController {
     @GetMapping("/profiles")
     public List<UserDTO> getUsers() {
         return userRepository.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
+    }
+
+    //get a specific user by username
+    @GetMapping("/user/{username}")
+    public UserDTO getUser(@PathVariable String username) {
+        if (userRepository.findByUsername(username).isEmpty())
+            throw new UserNotFoundException(new Long(0));
+        return new UserDTO(userRepository.findByUsername(username).get());
     }
 
 
