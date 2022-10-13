@@ -68,8 +68,9 @@ public class SecurityConfig {
                 // .mvcMatchers("/profiles").authenticated()
                 // .and().cors()
                 // .and().oauth2ResourceServer().jwt()
-
+                
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/user/delete/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/listingpage/createlisting*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage/*").hasAnyRole("USER", "ADMIN")

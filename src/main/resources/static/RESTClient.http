@@ -24,7 +24,9 @@ Content-Type: application/json
     "lastname" : "string",
     "contactNo" : "12345678"
 }
-
+###
+DELETE  http://localhost:8080/user/delete/5
+Content-Type: application/json
 ###
 #get all listings
 GET http://localhost:8080/listingpage
