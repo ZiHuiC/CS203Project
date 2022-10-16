@@ -1,5 +1,6 @@
 package com.csd;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -86,6 +87,7 @@ public class UserServiceTest {
         User foundUser = userService.getUser(user.getUsername());
 
         assertNotNull(foundUser);
+        assertInstanceOf(User.class, foundUser);
         verify(users).findByUsername(user.getUsername());
     }
 
@@ -128,8 +130,8 @@ public class UserServiceTest {
         verify(users).findAll();
     }
 
-    @Test
-    void deleteUser_DontExist(){
+    // @Test
+    // void deleteUser_DontExist(){
         
-    }
+    // }
 }

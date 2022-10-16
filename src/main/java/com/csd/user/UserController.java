@@ -50,8 +50,8 @@ public class UserController {
      * @param username
      * @return the specified UserDTO
      */
-    @GetMapping("/user/{username}")
-    public UserDTO getUser(@PathVariable String username) {
+    @GetMapping("/user")
+    public UserDTO getUser(@RequestParam String username) {
         User extractedUser = userService.getUser(username);
         if (extractedUser == null)
             throw new UserNotFoundException(username);
