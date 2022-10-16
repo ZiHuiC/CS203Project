@@ -1,6 +1,6 @@
 # CS203Project
 # Lend a Hand
-Started on DD/MM/YYYY
+Started on 13/09/2022
 ## To do:
 1. Login
 2. Sign up sends email for confirmation
