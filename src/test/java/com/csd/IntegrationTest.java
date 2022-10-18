@@ -2,10 +2,12 @@ package com.csd;
 
 import java.net.URI;
 
+import com.csd.user.User;
 import com.csd.user.UserRepository;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.RedirectConfig.redirectConfig;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,6 +50,7 @@ class IntegrationTest {
     @AfterEach
     void tearDown(){
         //remove added entities in database
+        users.deleteByUsername("test@lendahand.com");
     }
 
     @Test
@@ -60,4 +63,28 @@ class IntegrationTest {
         then().
             statusCode(200);
     }
+
+    @Test
+	public void getUser_ValidUserId_Success() throws Exception {
+		URI uri = new URI(baseUrl + port + "/user?username=test@lendahand.com");
+        User user = new User(
+        "test@lendahand.com",
+        encoder.encode("password"),
+        "firstname",
+        "lastname",
+        "62353535",
+        "ROLE_USER");
+        if (users.findByUsername("test@lendahand.com").isEmpty())
+            users.save(user);
+        Long id = (users.findByUsername("test@lendahand.com")).get().getId();
+
+		given().get(uri).
+		then().
+			statusCode(200).
+			body("id", equalTo(id.intValue()), 
+            "contactNo", equalTo(user.getContactNo()),
+            "firstname", equalTo(user.getFirstname()),
+            "lastname", equalTo(user.getLastname()));
+		
+	}
 }
