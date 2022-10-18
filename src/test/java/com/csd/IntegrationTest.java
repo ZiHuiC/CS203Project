@@ -65,6 +65,26 @@ class IntegrationTest {
     }
 
     @Test
+	public void getUsers_NotAuthenticated_Fail() throws Exception {
+        URI uri = new URI(baseUrl + port + "/profiles");
+
+        given().get(uri).
+        then().
+            statusCode(401);
+    }
+
+    @Test
+	public void getUsers_NotAuthorized_Fail() throws Exception {
+        URI uri = new URI(baseUrl + port + "/profiles");
+
+        given().auth().basic("user@gmail.com", "password")
+            .accept("*/*").contentType("application/json")
+            .get(uri).
+        then().
+            statusCode(403);
+    }
+    
+    @Test
 	public void getUser_ValidUserId_Success() throws Exception {
 		URI uri = new URI(baseUrl + port + "/user?username=test@lendahand.com");
         User user = new User(
@@ -85,6 +105,16 @@ class IntegrationTest {
             "contactNo", equalTo(user.getContactNo()),
             "firstname", equalTo(user.getFirstname()),
             "lastname", equalTo(user.getLastname()));
-		
 	}
+
+    @Test
+	public void getUser_InvalidUserId_Fail() throws Exception {
+        URI uri = new URI(baseUrl + port + "/user?username=dontExist");
+
+        given().get(uri).
+        then().
+            statusCode(404);
+    }
+
+
 }
