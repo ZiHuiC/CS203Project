@@ -50,7 +50,8 @@ class IntegrationTest {
     @AfterEach
     void tearDown(){
         //remove added entities in database
-        users.deleteByUsername("test@lendahand.com");
+        if (!users.findByUsername("test@lendahand.com").isEmpty())
+            users.deleteByUsername("test@lendahand.com");
     }
 
     @Test
@@ -85,7 +86,7 @@ class IntegrationTest {
     }
     
     @Test
-	public void getUser_ValidUserId_Success() throws Exception {
+	public void getUser_ValidUsername_Success() throws Exception {
 		URI uri = new URI(baseUrl + port + "/user?username=test@lendahand.com");
         User user = new User(
         "test@lendahand.com",
@@ -108,7 +109,7 @@ class IntegrationTest {
 	}
 
     @Test
-	public void getUser_InvalidUserId_Fail() throws Exception {
+	public void getUser_InvalidUsername_Fail() throws Exception {
         URI uri = new URI(baseUrl + port + "/user?username=dontExist");
 
         given().get(uri).
@@ -117,4 +118,36 @@ class IntegrationTest {
     }
 
 
+    @Test
+	public void getUser_ValidUserId_Success() throws Exception {
+        User user = new User(
+        "test@lendahand.com",
+        encoder.encode("password"),
+        "firstname",
+        "lastname",
+        "62353535",
+        "ROLE_USER");
+        if (users.findByUsername("test@lendahand.com").isEmpty())
+            users.save(user);
+        Long id = (users.findByUsername("test@lendahand.com")).get().getId();
+        URI uri = new URI(baseUrl + port + "/user/" + id);
+
+		given().get(uri).
+		then().
+			statusCode(200).
+			body("id", equalTo(id.intValue()), 
+            "contactNo", equalTo(user.getContactNo()),
+            "firstname", equalTo(user.getFirstname()),
+            "lastname", equalTo(user.getLastname()));
+	}
+
+    @Test
+	public void getUser_InvalidUserId_Fail() throws Exception {
+        //can break code if no. of users >= 99999999
+        URI uri = new URI(baseUrl + port + "/user/99999999");
+
+        given().get(uri).
+        then().
+            statusCode(404);
+    }
 }
