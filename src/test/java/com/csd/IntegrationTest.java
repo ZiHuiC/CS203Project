@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import io.restassured.RestAssured;
 import io.restassured.config.JsonConfig;
 import io.restassured.path.json.config.JsonPathConfig;
+import net.minidev.json.JSONObject;
 
 // Using REST Assured https://rest-assured.io/ is another way to write integration tests
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -52,6 +53,10 @@ class IntegrationTest {
         //remove added entities in database
         if (!users.findByUsername("test@lendahand.com").isEmpty())
             users.deleteByUsername("test@lendahand.com");
+        if (!users.findByUsername("post test").isEmpty())
+            users.deleteByUsername("post test");
+        if (!users.findByUsername("post test3").isEmpty())
+            users.deleteByUsername("post test3");
     }
 
     @Test
@@ -150,4 +155,67 @@ class IntegrationTest {
         then().
             statusCode(404);
     }
+
+    @Test
+	public void addUser_ValidParam_Success() throws Exception {
+        
+        URI uri = new URI(baseUrl + port + "/signup");
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("username", "post test");
+        requestParams.put("password", "pass");
+        requestParams.put("firstname", "pat");
+        requestParams.put("lastname", "ted");
+        requestParams.put("contactNo", "12345678");
+    
+		given()
+            .accept("*/*").contentType("application/json").
+            body(requestParams.toJSONString()).post(uri).
+		then().
+			statusCode(200).
+			body("id", equalTo(users.findByUsername("post test").get().getId().intValue()), 
+            "contactNo", equalTo("12345678"),
+            "firstname", equalTo("pat"),
+            "lastname", equalTo("ted"));
+	}
+
+    // @Test
+	// public void addUser_InvalidParam_Fail() throws Exception {
+        
+    //     URI uri = new URI(baseUrl + port + "/signup");
+    //     JSONObject requestParams = new JSONObject();
+    //     requestParams.put("username", "post test2");
+    //     requestParams.put("password", "pass");
+    //     requestParams.put("firstname", "pat");
+    //     requestParams.put("lastname", "ted");
+    
+	// 	given().auth().basic("user@gmail.com", "password")
+    //         .accept("*/*").contentType("application/json").
+    //         body(requestParams.toJSONString()).post(uri).
+	// 	then().
+	// 		statusCode(400);
+	// }
+
+    @Test
+	public void addUser_DuplicateUsername_Fail() throws Exception {
+        User user = new User(
+            "post test3", encoder.encode("pass"),
+            "pass", "ted", "12345678");
+
+        if (users.findByUsername("test@lendahand.com").isEmpty())
+            users.save(user);
+
+        URI uri = new URI(baseUrl + port + "/signup");
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("username", "post test3");
+        requestParams.put("password", "pass");
+        requestParams.put("firstname", "pat");
+        requestParams.put("lastname", "ted");
+        requestParams.put("contactNo", "12345678");
+    
+		given()
+            .accept("*/*").contentType("application/json").
+            body(requestParams.toJSONString()).post(uri).
+		then().
+			statusCode(409);
+	}
 }
