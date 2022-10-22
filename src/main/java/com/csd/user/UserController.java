@@ -3,6 +3,7 @@ package com.csd.user;
 import javax.validation.Valid;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class UserController {
      * @param user
      * @return the newly added user as UserDTO
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
     public UserDTO addUser(@Valid @RequestBody User user) {
         // for BCrypt authorization

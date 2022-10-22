@@ -14,7 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.util.*;
@@ -36,19 +36,19 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Username should not be empty")
+    @NotBlank(message = "Username should not be empty")
     private String username;
 
-    @NotNull(message = "Password should not be empty")
+    @NotBlank(message = "Password should not be empty")
     private String password;
 
-    @NotNull(message = "First name should not be empty")
+    @NotBlank(message = "First name should not be empty")
     private String firstname;
 
-    @NotNull(message = "Last name should not be empty")
+    @NotBlank(message = "Last name should not be empty")
     private String lastname;
 
-    @NotNull(message = "Contact number should not be empty")
+    @NotBlank(message = "Contact number should not be empty")
     @Size(min = 8, max = 8, message = "Contact should be 8 characters")
     private String contactNo;
 

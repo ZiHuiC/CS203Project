@@ -23,7 +23,6 @@ import io.restassured.config.JsonConfig;
 import io.restassured.path.json.config.JsonPathConfig;
 import net.minidev.json.JSONObject;
 
-// Using REST Assured https://rest-assured.io/ is another way to write integration tests
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class IntegrationTest {
 
@@ -171,7 +170,7 @@ class IntegrationTest {
             .accept("*/*").contentType("application/json").
             body(requestParams.toJSONString()).post(uri).
 		then().
-			statusCode(200).
+			statusCode(201).
 			body("id", equalTo(users.findByUsername("post test").get().getId().intValue()), 
             "contactNo", equalTo("12345678"),
             "firstname", equalTo("pat"),
