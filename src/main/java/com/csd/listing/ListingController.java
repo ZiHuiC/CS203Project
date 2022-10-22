@@ -3,19 +3,26 @@ package com.csd.listing;
 import com.csd.user.UserNotFoundException;
 import com.csd.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.csd.listing.util.Util.compressBytes;
 
 @CrossOrigin
 @RestController
 public class ListingController {
     private final ListingRepository listings;
     private final UserRepository users;
+    private final ImageRepository images;
 
-    public ListingController(ListingRepository listings, UserRepository users) {
+    public ListingController(ListingRepository listings, UserRepository users, ImageRepository images) {
         this.listings = listings;
         this.users = users;
+        this.images = images;
     }
 
     @GetMapping("/listingpage")
@@ -32,10 +39,21 @@ public class ListingController {
         }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
+    @PostMapping("/listingpage/createlisting/imageupload")
+    public ImageModel saveUser(@RequestParam Long id,
+                                 @RequestParam("image") MultipartFile multipartFile) throws IOException {
+        ImageModel img = new ImageModel(multipartFile.getOriginalFilename(), multipartFile.getContentType(),
+                multipartFile.getBytes());
+        listings.getReferenceById(id).setPhoto(img);
+        return images.save(img);
+    }
+
+
     @GetMapping("/listingpage/{id}")
     public ListingDTO findListingById(@PathVariable Long id) {
         if (listings.findListingById(id).isEmpty())
             throw new ListingNotFoundException(id);
+
         return new ListingDTO(listings.findListingById(id).get());
     }
 

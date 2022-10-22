@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class Listing {
     private String name;
     private String des;
     private Integer noOfParticipants = -1; // -1 means unlimited
+
+    @OneToOne
+    private ImageModel photo;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

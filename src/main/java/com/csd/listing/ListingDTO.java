@@ -18,6 +18,7 @@ public class ListingDTO {
     private Integer noOfParticipants;
     private UserDTO lister;
     private List<ApplicationDTO> applications;
+    private ImageModel photo;
 
     public ListingDTO(Listing listing) {
         this.id = listing.getId();
@@ -25,6 +26,7 @@ public class ListingDTO {
         this.des = listing.getDes();
         this.noOfParticipants = listing.getNoOfParticipants();
         this.lister = new UserDTO(listing.getLister());
+        this.photo = listing.getPhoto();
         if (listing.getApplications() == null)
             this.applications = new ArrayList<>();
         else
