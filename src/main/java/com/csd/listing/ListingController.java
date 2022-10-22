@@ -29,18 +29,19 @@ public class ListingController {
             (@RequestParam(required = false) String commitment, @RequestParam(required = false) List<String> tagsArg) {
 
         List<Tag> tagsList = new ArrayList<>();
-        for (String t:tagsArg) {
-            Optional<Tag> tag = tags.findTagByValue(t);
-            tag.ifPresent(tagsList::add);
-        }
+        if (tagsArg != null)
+            for (String t:tagsArg) {
+                Optional<Tag> tag = tags.findTagByValue(t);
+                tag.ifPresent(tagsList::add);
+            }
 
-//        if (commitment != null && tags != null)
-//            return listings.retrieveByCommitmentFilterByTag(commitment, tags).stream().map(ListingDTO::new).collect(Collectors.toList());
+       if (commitment != null && !tagsList.isEmpty())
+           return listings.findByCommitmentAndTagsIn(commitment, tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
         if (commitment != null)
             return listings.findListingByCommitment(commitment)
                 .stream().map(ListingDTO::new).collect(Collectors.toList());
-//        if (tags != null)
-//            return listings.findListingByTags(tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
+        if (!tagsList .isEmpty())
+           return listings.findByTagsIn(tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
         return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
     }

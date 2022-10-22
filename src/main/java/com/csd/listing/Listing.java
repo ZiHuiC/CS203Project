@@ -42,6 +42,9 @@ public class Listing {
     private String commitment;
 
     @ManyToMany
+    @JoinTable(name = "tags", 
+        joinColumns = @JoinColumn(name = "listing_id"),
+        inverseJoinColumns = @JoinColumn(name="tag_id"))
     private List<Tag> tags = new ArrayList<>();
 
     @ManyToOne

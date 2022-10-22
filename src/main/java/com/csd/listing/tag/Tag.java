@@ -5,7 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.persistence.*;
+
+import com.csd.listing.Listing;
 
 @Entity
 @Getter
@@ -18,4 +23,7 @@ public class Tag {
     private Long id;
 
     private String value;
+
+    @ManyToMany(mappedBy = "tags")
+    private List<Listing> listings = new ArrayList<>();
 }

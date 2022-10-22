@@ -15,8 +15,9 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     Optional<Listing> findListingById(Long id);
     List<Listing> findListingByCommitment(String commitment);
 
-    List<Listing> findListingByTag(Tag tag);
-//    List<Listing> retrieveByCommitmentFilterByTags(List<Tag> tags);
+    List<Listing> findByTags(Tag tag);
+    List<Listing> findByTagsIn(List<Tag> tags);
+    List<Listing> findByCommitmentAndTagsIn(String commitment, List<Tag> tags);
 
 //    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE l.commitment = LOWER(:commitment) AND t = LOWER(:tag)")
 //    List<Listing> retrieveByCommitmentFilterByTag(@Param("commitment") String commitment, @Param("tag") String tag);
