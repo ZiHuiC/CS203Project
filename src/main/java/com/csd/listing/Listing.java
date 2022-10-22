@@ -1,12 +1,14 @@
 package com.csd.listing;
 
 import com.csd.application.Application;
+import com.csd.listing.tag.Tag;
 import com.csd.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -28,6 +30,19 @@ public class Listing {
     private String name;
     private String des;
     private Integer noOfParticipants = -1; // -1 means unlimited
+    /*
+    adhoc
+    1week
+    1month
+    3months
+    6months
+    1year
+    long-term
+     */
+    private String commitment;
+
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
