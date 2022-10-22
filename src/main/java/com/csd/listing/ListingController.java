@@ -35,8 +35,8 @@ public class ListingController {
                 tag.ifPresent(tagsList::add);
             }
 
-       if (commitment != null && !tagsList.isEmpty())
-           return listings.findByCommitmentAndTagsIn(commitment, tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
+        if (commitment != null && !tagsList.isEmpty())
+            return listings.findByCommitmentAndTagsIn(commitment, tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
         if (commitment != null)
             return listings.findListingByCommitment(commitment)
                 .stream().map(ListingDTO::new).collect(Collectors.toList());

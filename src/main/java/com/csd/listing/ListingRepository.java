@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
+    Optional<Listing> findByName(String name);
+
     Optional<Listing> findListingById(Long id);
     List<Listing> findListingByCommitment(String commitment);
 
