@@ -29,6 +29,13 @@ public class Listing {
     private String des;
     private Integer noOfParticipants = -1; // -1 means unlimited
 
+    // We define commitment length by Ad-Hoc / 1 Week / 1 Month / 3 Months / 6 Months / 1 Year / Long-term
+    //                                0      / 1      / 4       / 12       / 24       / 48     / 50
+//    private Integer commitmentLength;
+
+    // Category tags, list containing related keywords
+//    private List<String> categoryTags;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User lister;

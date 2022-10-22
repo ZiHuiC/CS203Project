@@ -23,6 +23,23 @@ public class ListingController {
         return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
     }
 
+
+//    @GetMapping("/listingpage")
+//    public List<ListingDTO> getListings(@RequestParam String commitmentLength) {
+//        return listings.findListingByCommitmentLength(commitmentLength).stream().map(ListingDTO::new).collect(Collectors.toList());
+//    }
+
+//    @GetMapping("/listingpage")
+//    public List<ListingDTO> getListings(@RequestParam String... tags) {
+//        return listings.findListingByCategoryTags(tags).stream().map(ListingDTO::new).collect(Collectors.toList());
+//    }
+//
+//    @GetMapping("/listingpage")
+//    public List<ListingDTO> getListings(@RequestParam String commitmentLength, @RequestParam String... tags) {
+//        return listings.findListingByCommitmentAndByTags(commitmentLength, tags).stream().map(ListingDTO::new).collect(Collectors.toList());
+//    }
+
+
     @PostMapping("/listingpage/createlisting")
     public ListingDTO addListing(@RequestParam Long userId, @RequestBody Listing listing) {
         // need to add the user_id to the table
