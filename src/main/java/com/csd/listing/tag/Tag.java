@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import javax.persistence.*;
 
@@ -24,8 +23,8 @@ public class Tag {
 
     private String value;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Listing> listings = new ArrayList<>();
+    @OneToMany(mappedBy = "tag", orphanRemoval = false)
+    private List<Listing> listings;
 
     public Tag(String value) {
         this.value = value;

@@ -49,27 +49,21 @@ public class CsdApplication {
 					)).getUsername());
 		else
 			System.out.println("User already added");
-		
+
+		if (tags.findTagByValue("Coastal").isEmpty()){
+			Tag tag = new Tag("Coastal");
+			System.out.println("[Add tag]: " + tags.save(tag).getValue());
+		}	
+		else
+			System.out.println("Tag already added");
+
 		if (listings.findByName("Clean ECP").isEmpty()){
 			Listing listing = new Listing("Clean ECP", "Clean up ECP");
 			listing.setLister(users.findByUsername("user@gmail.com").get());
+			listing.setTag(tags.findTagByValue("Coastal").get());
 			System.out.println("[Add listings]: " + listings.save(listing).getName());
 		}
 		else
 			System.out.println("Listing already added");
-
-		if (tags.findTagByValue("clean up").isEmpty()){
-			Tag tag = new Tag("clean up");
-			tag.setListings(new ArrayList<Listing>(Arrays.asList(listings.findByName("Clean ECP").get())));
-			System.out.println("[Add tag]: " + tags.save(tag).getValue());
-
-			listings.findByName("Clean ECP").map(listing -> {
-				listing.setTags(new ArrayList<Tag>(Arrays.asList(tags.findTagByValue("clean up").get())));
-				return listings.save(listing);
-			});
-			
-		}	
-		else
-			System.out.println("Tag already added");
 	}
 }
