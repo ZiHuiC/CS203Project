@@ -43,6 +43,19 @@ public class ListingController {
         this.userService = userService;
     }
 
+    @GetMapping("/listingpage/search")
+    public List<ListingDTO> findListingByTitle(@RequestParam String... inName) {
+        List<ListingDTO> result = new ArrayList<>();
+        List<Listing> allListings = listings.findAll();
+        for (Listing l: allListings) {
+            for (String item: inName) {
+                if (l.getName().toLowerCase().contains(item.toLowerCase()))
+                    result.add(new ListingDTO(l));
+            }
+        }
+        return result;
+    }
+
     @GetMapping("/listingpage")
     public List<ListingDTO> getListings
             (@RequestParam(required = false) String commitment, 
