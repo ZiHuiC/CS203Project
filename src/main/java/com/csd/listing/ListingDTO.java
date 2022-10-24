@@ -22,8 +22,7 @@ public class ListingDTO {
     private List<ApplicationDTO> applications;
     private ImageModel photo;
     private String commitment;
-    @ElementCollection
-    private List<TagDTO> tags = new ArrayList<>();
+    private TagDTO tag;
 
 
     public ListingDTO(Listing listing) {
@@ -34,10 +33,7 @@ public class ListingDTO {
         this.lister = new UserDTO(listing.getLister());
         this.photo = listing.getPhoto();
         this.commitment = listing.getCommitment();
-        if (listing.getTags() == null)
-            this.tags = new ArrayList<>();
-        else
-            this.tags = listing.getTags().stream().map(TagDTO::new).collect(Collectors.toList());
+        this.tag = new TagDTO(listing.getTag());
         if (listing.getApplications() == null)
             this.applications = new ArrayList<>();
         else

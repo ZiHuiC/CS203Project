@@ -1,6 +1,5 @@
 package com.csd.listing.tag;
 
-import com.csd.application.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -9,4 +9,7 @@ public class ListingNotFoundException extends RuntimeException {
     public ListingNotFoundException(Long id) {
         super("Could not find listing " + id);
     }
+    public ListingNotFoundException(String name) {
+        super("Could not find listing " + name);
+    }
 }

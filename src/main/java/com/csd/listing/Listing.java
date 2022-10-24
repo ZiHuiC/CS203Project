@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -42,11 +40,9 @@ public class Listing {
      */
     private String commitment;
 
-    @ManyToMany
-    @JoinTable(name = "tags", 
-        joinColumns = @JoinColumn(name = "listing_id"),
-        inverseJoinColumns = @JoinColumn(name="tag_id"))
-    private List<Tag> tags = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "Tag", nullable = false)
+    private Tag tag;
 
     @OneToOne
     private ImageModel photo;

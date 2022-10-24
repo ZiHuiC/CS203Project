@@ -1,9 +1,14 @@
 package com.csd.listing;
 
 import com.csd.listing.tag.Tag;
+import com.csd.listing.tag.TagNotFoundException;
 import com.csd.listing.tag.TagRepository;
+import com.csd.user.User;
+import com.csd.user.UserDTO;
 import com.csd.user.UserNotFoundException;
 import com.csd.user.UserRepository;
+import com.csd.user.UserServiceImpl;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
@@ -23,36 +28,74 @@ public class ListingController {
     private final UserRepository users;
     private final ImageRepository images;
     private final TagRepository tags;
+    private UserServiceImpl userService;
 
     public ListingController
             (ListingRepository listings,
              UserRepository users,
              ImageRepository images,
-             TagRepository tags) {
+             TagRepository tags,
+             UserServiceImpl userService) {
         this.listings = listings;
         this.users = users;
         this.images = images;
         this.tags = tags;
+        this.userService = userService;
     }
 
     @GetMapping("/listingpage")
     public List<ListingDTO> getListings
-            (@RequestParam(required = false) String commitment, @RequestParam(required = false) List<String> tagsArg) {
+            (@RequestParam(required = false) String commitment, 
+            @RequestParam(required = false) String tag,
+            @RequestParam(required = false) String username) {
+        
+        if (commitment != null && tag != null && username != null){
+            tags.findTagByValue(tag).map(tagVal -> {
+                    User userVal = userService.getUser(username);
+                    if (userVal == null) 
+                        throw new UserNotFoundException(username);
+                    return listings.findByListerAndCommitmentAndTag(userVal,commitment, tagVal)
+                            .stream().map(ListingDTO::new).collect(Collectors.toList());
+            }).orElseThrow(() -> new TagNotFoundException(tag));
+        }
+        // trust that input commitment is correct
+        if (commitment != null && tag != null){
+            tags.findTagByValue(tag).map(tagVal -> {
+                    return listings.findByCommitmentAndTag(commitment, tagVal).stream().map(ListingDTO::new).collect(Collectors.toList());
+            }).orElseThrow(() -> new TagNotFoundException(tag));
+        }
 
-        List<Tag> tagsList = new ArrayList<>();
-        if (tagsArg != null)
-            for (String t:tagsArg) {
-                Optional<Tag> tag = tags.findTagByValue(t);
-                tag.ifPresent(tagsList::add);
-            }
+        if (username != null && tag != null){
+            tags.findTagByValue(tag).map(tagVal -> {
+                    User userVal = userService.getUser(username);
+                    if (userVal == null) 
+                        throw new UserNotFoundException(username);
+                    return listings.findByListerAndTag(userVal, tagVal).stream().map(ListingDTO::new).collect(Collectors.toList());
+            }).orElseThrow(() -> new TagNotFoundException(tag));
+        }
 
-        if (commitment != null && !tagsList.isEmpty())
-            return listings.findByCommitmentAndTagsIn(commitment, tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
+        if (username != null && commitment != null){
+            User userVal = userService.getUser(username);
+            if (userVal == null) 
+                throw new UserNotFoundException(username);
+            return listings.findByListerAndCommitment(userVal, commitment).stream().map(ListingDTO::new).collect(Collectors.toList());
+            
+        }
+        // trust that input commitment is correct
         if (commitment != null)
             return listings.findListingByCommitment(commitment)
                 .stream().map(ListingDTO::new).collect(Collectors.toList());
-        if (!tagsList .isEmpty())
-           return listings.findByTagsIn(tagsList).stream().map(ListingDTO::new).collect(Collectors.toList());
+        if (tag != null)
+            tags.findTagByValue(tag).map(tagVal -> {
+                    return listings.findByTag(tagVal).stream().map(ListingDTO::new).collect(Collectors.toList());
+            }).orElseThrow(() -> new TagNotFoundException(tag));
+        if (username != null){
+            User userVal = userService.getUser(username);
+            if (userVal == null) 
+                throw new UserNotFoundException(username);
+            return listings.findByLister(userVal).stream().map(ListingDTO::new).collect(Collectors.toList());
+        }
+        // no param
         return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
     }

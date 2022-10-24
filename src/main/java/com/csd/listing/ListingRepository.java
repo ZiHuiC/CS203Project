@@ -1,6 +1,8 @@
 package com.csd.listing;
 
 import com.csd.listing.tag.Tag;
+import com.csd.user.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,13 +15,17 @@ import java.util.Optional;
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
     Optional<Listing> findByName(String name);
-
     Optional<Listing> findListingById(Long id);
-    List<Listing> findListingByCommitment(String commitment);
+    Optional<Listing> findByTag(Tag tag);
 
-    List<Listing> findByTags(Tag tag);
-    List<Listing> findByTagsIn(List<Tag> tags);
-    List<Listing> findByCommitmentAndTagsIn(String commitment, List<Tag> tags);
+    List<Listing> findListingByCommitment(String commitment);
+    List<Listing> findByLister(User user);
+    
+    List<Listing> findByListerAndTag(User user, Tag tag);
+    List<Listing> findByListerAndCommitment(User user, String commitment);
+    List<Listing> findByCommitmentAndTag(String commitment, Tag tags);
+
+    List<Listing> findByListerAndCommitmentAndTag(User user, String commitment, Tag tag);
 
 //    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE l.commitment = LOWER(:commitment) AND t = LOWER(:tag)")
 //    List<Listing> retrieveByCommitmentFilterByTag(@Param("commitment") String commitment, @Param("tag") String tag);

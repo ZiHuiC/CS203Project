@@ -39,6 +39,10 @@ Content-Type: application/json
 
 ###
 
+GET http://localhost:8080/listingpage?username=user@gmail.com
+Content-Type: application/json
+
+###
 #get a listings based on its id
 GET http://localhost:8080/listingpage/1
 Content-Type: application/json
