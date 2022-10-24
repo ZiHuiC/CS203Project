@@ -4,7 +4,7 @@ import com.csd.listing.tag.Tag;
 import com.csd.listing.tag.TagNotFoundException;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
-import com.csd.user.UserDTO;
+import com.csd.user.UserDTOs.UserDTO;
 import com.csd.user.UserNotFoundException;
 import com.csd.user.UserRepository;
 import com.csd.user.UserServiceImpl;
