@@ -2,6 +2,10 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
+import com.csd.user.UserDTOs.UserContactDTO;
+import com.csd.user.UserDTOs.UserDTO;
+import com.csd.user.UserDTOs.UserNameDTO;
+import com.csd.user.UserDTOs.UserPasswordDTO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -62,7 +66,7 @@ public class UserController {
 
     /**
      * get a specific user by id
-     * @param username
+     * @param id
      * @return the specified UserDTO
      */
     @GetMapping("/user/{id}")
@@ -82,6 +86,52 @@ public class UserController {
         try{
             userService.deleteUser(id);
         }catch(EmptyResultDataAccessException e) {
+            throw new UserNotFoundException(id);
+        }
+    }
+
+    /**
+     * update a specific user detail by id
+     * @param id
+     * @param updatedUser
+     */
+    @PutMapping("/user/update/name/{id}")
+    public void updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
+        try {
+            User user = userService.getUser(id);
+            user.setFirstname(updatedUser.getFirstname());
+            user.setLastname(updatedUser.getLastname());
+        } catch(EmptyResultDataAccessException e) {
+            throw new UserNotFoundException(id);
+        }
+    }
+
+    /**
+     * update a specific user detail by id
+     * @param id
+     * @param updatedUser
+     */
+    @PutMapping("/user/update/password/{id}")
+    public void updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
+        try {
+            User user = userService.getUser(id);
+            user.setPassword(encoder.encode(updatedUser.getPassword()));
+        } catch(EmptyResultDataAccessException e) {
+            throw new UserNotFoundException(id);
+        }
+    }
+
+    /**
+     * update a specific user detail by id
+     * @param id
+     * @param updatedUser
+     */
+    @PutMapping("/user/update/contact/{id}")
+    public void updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
+        try {
+            User user = userService.getUser(id);
+            user.setContactNo(updatedUser.getContact());
+        } catch(EmptyResultDataAccessException e) {
             throw new UserNotFoundException(id);
         }
     }

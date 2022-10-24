@@ -8,6 +8,7 @@ Content-Type: application/json
 GET http://localhost:8080/profiles
 Content-Type: application/json
 Authorization: Basic admin@lendahand.com password
+
 ###
 GET http://localhost:8080/user/1
 Content-Type: application/json
