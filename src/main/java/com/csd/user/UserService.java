@@ -7,7 +7,6 @@ public interface UserService {
     User getUser(Long id);
     User getUser(String username);
     User addUser(User user);
-    // for when we want to add feature of changing password
-    // User updateUser();
+    User updateUser(User user);
     void deleteUser(Long id);
 }

@@ -48,7 +48,7 @@ public class ApplicationController {
         return user.get().getApplications().stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
 
-    @PostMapping("/listingpage/{listingid}/apply")
+    @PostMapping("/listingpage/{listingid}/newapplication")
     public ApplicationDTO addApplication(@RequestParam Long userId, @PathVariable Long listingid,
             @RequestBody Application application) {
         var user = users.findById(userId);

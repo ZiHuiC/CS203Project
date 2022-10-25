@@ -38,6 +38,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User updateUser(User user){
+        Optional<User> sameUsername = users.findById(user.getId());
+        if (sameUsername.isPresent())
+            return users.save(user);
+        else
+            throw new UserNotFoundException(user.getId());
+    }
+
+    @Override
     public void deleteUser(Long id){
         users.deleteById(id);
     }

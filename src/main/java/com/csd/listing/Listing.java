@@ -40,6 +40,8 @@ public class Listing {
      */
     private String commitment;
 
+    private String location;
+
     @ManyToOne
     @JoinColumn(name = "Tag", nullable = false)
     private Tag tag;
@@ -54,9 +56,11 @@ public class Listing {
     @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> applications;
 
-    public Listing(String name, String des) {
+    public Listing(String name, String des, String commitment, String location) {
         this.name = name;
         this.des = des;
+        this.commitment = commitment;
+        this.location = location;
     }
 
 }

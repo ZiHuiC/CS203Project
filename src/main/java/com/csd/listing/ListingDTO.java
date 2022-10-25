@@ -22,6 +22,7 @@ public class ListingDTO {
     private List<ApplicationDTO> applications;
     private ImageModel photo;
     private String commitment;
+    private String location;
     private TagDTO tag;
 
 
@@ -33,6 +34,7 @@ public class ListingDTO {
         this.lister = new UserDTO(listing.getLister());
         this.photo = listing.getPhoto();
         this.commitment = listing.getCommitment();
+        this.location = listing.getLocation();
         this.tag = new TagDTO(listing.getTag());
         if (listing.getApplications() == null)
             this.applications = new ArrayList<>();

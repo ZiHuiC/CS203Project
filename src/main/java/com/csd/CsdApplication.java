@@ -50,20 +50,29 @@ public class CsdApplication {
 		else
 			System.out.println("User already added");
 
-		if (tags.findTagByValue("Coastal").isEmpty()){
-			Tag tag = new Tag("Coastal");
-			System.out.println("[Add tag]: " + tags.save(tag).getValue());
-		}	
-		else
-			System.out.println("Tag already added");
+		createTag(tags, "Coastal");
+		createTag(tags, "Marine");
+		createTag(tags, "Jungle");
+		createTag(tags, "Clean Energy");
+		createTag(tags, "Agriculture");
+		createTag(tags, "Recycling and Waste");
 
 		if (listings.findByName("Clean ECP").isEmpty()){
-			Listing listing = new Listing("Clean ECP", "Clean up ECP");
+			Listing listing = new Listing("Clean ECP", "Clean up ECP", "ad-hoc", "West");
 			listing.setLister(users.findByUsername("user@gmail.com").get());
 			listing.setTag(tags.findTagByValue("Coastal").get());
 			System.out.println("[Add listings]: " + listings.save(listing).getName());
 		}
 		else
 			System.out.println("Listing already added");
+	}
+
+	private static void createTag(TagRepository tags, String name) {
+		if (tags.findTagByValue(name).isEmpty()){
+			Tag tag = new Tag(name);
+			System.out.println("[Add tag]: " + tags.save(tag).getValue());
+		}	
+		else
+			System.out.println(name + " already added");
 	}
 }

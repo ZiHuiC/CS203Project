@@ -137,7 +137,7 @@ public class ListingController {
 
 //    }
 
-    @PostMapping("/listingpage/createlisting")
+    @PostMapping("/listingpage/newlisting")
     public ListingDTO addListing(@RequestParam Long userId, @RequestBody Listing listing) {
         // need to add the user_id to the table
         return users.findById(userId).map(user -> {
@@ -147,7 +147,7 @@ public class ListingController {
         }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
-    @PostMapping("/listingpage/createlisting/imageupload")
+    @PostMapping("/listingpage/newlisting/imageupload")
     public ImageModel saveUser(@RequestParam Long id,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
         ImageModel img = new ImageModel(multipartFile.getOriginalFilename(), multipartFile.getContentType(),

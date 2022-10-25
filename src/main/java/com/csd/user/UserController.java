@@ -32,7 +32,7 @@ public class UserController {
      * @return the newly added user as UserDTO
      */
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/signup")
+    @PostMapping("/newuser")
     public UserDTO addUser(@Valid @RequestBody User user) {
         // for BCrypt authorization
         user.setPassword(encoder.encode(user.getPassword()));
@@ -81,7 +81,7 @@ public class UserController {
      * remove a specific user by id
      * @param id
      */
-    @DeleteMapping("/user/delete/{id}")
+    @DeleteMapping("/user/removal/{id}")
     public void deleteUser(@PathVariable Long id){
         try{
             userService.deleteUser(id);
@@ -94,45 +94,47 @@ public class UserController {
      * update a specific user detail by id
      * @param id
      * @param updatedUser
+     * @return the updated UserDTO
      */
-    @PutMapping("/user/update/name/{id}")
-    public void updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
-        try {
-            User user = userService.getUser(id);
-            user.setFirstname(updatedUser.getFirstname());
-            user.setLastname(updatedUser.getLastname());
-        } catch(EmptyResultDataAccessException e) {
+    @PutMapping("/user/reseting/name/{id}")
+    public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
+        User user = userService.getUser(id);
+        if (user == null)
             throw new UserNotFoundException(id);
-        }
+        
+        user.setFirstname(updatedUser.getFirstname());
+        user.setLastname(updatedUser.getLastname());
+        return new UserDTO(userService.updateUser(user));
     }
 
     /**
      * update a specific user detail by id
      * @param id
      * @param updatedUser
+     * @return the updated UserDTO
      */
-    @PutMapping("/user/update/password/{id}")
-    public void updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
-        try {
-            User user = userService.getUser(id);
-            user.setPassword(encoder.encode(updatedUser.getPassword()));
-        } catch(EmptyResultDataAccessException e) {
+    @PutMapping("/user/reseting/password/{id}")
+    public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
+        User user = userService.getUser(id);
+        if (user == null)
             throw new UserNotFoundException(id);
-        }
+
+        user.setPassword(encoder.encode(updatedUser.getPassword()));
+        return new UserDTO(userService.updateUser(user));
     }
 
     /**
      * update a specific user detail by id
      * @param id
      * @param updatedUser
+     * @return the updated UserDTO
      */
-    @PutMapping("/user/update/contact/{id}")
-    public void updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
-        try {
-            User user = userService.getUser(id);
-            user.setContactNo(updatedUser.getContact());
-        } catch(EmptyResultDataAccessException e) {
+    @PutMapping("/user/reseting/contact/{id}")
+    public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
+        User user = userService.getUser(id);
+        if (user == null)
             throw new UserNotFoundException(id);
-        }
+        user.setContactNo(updatedUser.getContact());
+        return new UserDTO(userService.updateUser(user));
     }
 }
