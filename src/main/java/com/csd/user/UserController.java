@@ -6,6 +6,10 @@ import com.csd.user.UserDTOs.UserContactDTO;
 import com.csd.user.UserDTOs.UserDTO;
 import com.csd.user.UserDTOs.UserNameDTO;
 import com.csd.user.UserDTOs.UserPasswordDTO;
+import com.csd.user.exceptions.UserExistsException;
+import com.csd.user.exceptions.UserNotFoundException;
+import com.csd.user.exceptions.WrongPasswordException;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -118,8 +122,10 @@ public class UserController {
         User user = userService.getUser(id);
         if (user == null)
             throw new UserNotFoundException(id);
-
-        user.setPassword(encoder.encode(updatedUser.getPassword()));
+        // String encodedOldPassword = encoder.encode(updatedUser.getOldPassword());
+        // if (user.getPassword().compareTo(encodedOldPassword) != 0)
+        //     throw new WrongPasswordException(encodedOldPassword);
+        user.setPassword(updatedUser.getPassword());
         return new UserDTO(userService.updateUser(user));
     }
 

@@ -54,7 +54,7 @@ GET http://localhost:8080/listingpage/1
 Content-Type: application/json
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=1
+POST http://localhost:8080/listingpage/newlisting?userId=1&tagName=Others
 Content-Type: application/json
 
 {

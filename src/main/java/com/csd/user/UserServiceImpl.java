@@ -3,6 +3,8 @@ package com.csd.user;
 import java.util.List;
 import java.util.Optional;
 
+import com.csd.user.exceptions.UserNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 @Service

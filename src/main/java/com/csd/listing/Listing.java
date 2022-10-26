@@ -2,6 +2,7 @@ package com.csd.listing;
 
 import com.csd.application.Application;
 import com.csd.listing.tag.Tag;
+import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

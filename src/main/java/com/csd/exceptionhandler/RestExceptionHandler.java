@@ -1,4 +1,4 @@
-package com.csd.exception;
+package com.csd.exceptionhandler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

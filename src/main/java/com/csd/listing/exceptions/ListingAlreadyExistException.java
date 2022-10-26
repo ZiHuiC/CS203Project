@@ -1,4 +1,4 @@
-package com.csd.listing;
+package com.csd.listing.exceptions;
 
 public class ListingAlreadyExistException extends RuntimeException {
 

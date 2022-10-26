@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.csd.listing.ListingRepository;
-import com.csd.user.UserNotFoundException;
+import com.csd.listing.exceptions.ListingNotFoundException;
 import com.csd.user.UserRepository;
-import com.csd.listing.ListingNotFoundException;
+import com.csd.user.exceptions.UserNotFoundException;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

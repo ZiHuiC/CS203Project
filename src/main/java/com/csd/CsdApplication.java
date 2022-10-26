@@ -1,8 +1,5 @@
 package com.csd;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.csd.listing.Listing;
 import com.csd.listing.ListingRepository;
 import com.csd.listing.tag.Tag;
@@ -56,6 +53,7 @@ public class CsdApplication {
 		createTag(tags, "Clean Energy");
 		createTag(tags, "Agriculture");
 		createTag(tags, "Recycling and Waste");
+		createTag(tags, "Others");
 
 		if (listings.findByName("Clean ECP").isEmpty()){
 			Listing listing = new Listing("Clean ECP", "Clean up ECP", "ad-hoc", "West");
