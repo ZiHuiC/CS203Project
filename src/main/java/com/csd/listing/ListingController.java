@@ -10,6 +10,7 @@ import com.csd.user.exceptions.UserNotMatchedException;
 import com.csd.user.UserRepository;
 import com.csd.user.UserServiceImpl;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -122,8 +123,7 @@ public class ListingController {
         if (searchedListing.isEmpty())
             throw new ListingNotFoundException(id);
         Listing oldListing = searchedListing.get();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String authName = auth.getName();
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         if (userService.getUser(authName).getId() == oldListing.getLister().getId()
                 || authName.compareTo("admin@lendahand.com") == 0){
@@ -140,5 +140,20 @@ public class ListingController {
             }).orElseThrow(()->new TagNotFoundException(newListingDetails.getTag()));
         }
         throw new UserNotMatchedException(oldListing.getId());
+    }
+
+    @DeleteMapping("/listingpage/removal/{id}")
+    public void deleteListing(@PathVariable Long id){
+        Optional<Listing> searchedListing = listings.findListingById(id);
+        if (searchedListing.isEmpty())
+            throw new ListingNotFoundException(id);
+        Listing listing = searchedListing.get();
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (userService.getUser(authName).getId() == listing.getLister().getId()
+                || authName.compareTo("admin@lendahand.com") == 0)
+            listings.deleteById(id);
+        else 
+            throw new UserNotMatchedException(listing.getId());
     }
 }
