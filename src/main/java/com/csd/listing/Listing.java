@@ -64,4 +64,12 @@ public class Listing {
         this.location = location;
     }
 
+    public Listing(String name, String des, String commitment, String location, int noOfParticipants) {
+        this.name = name;
+        this.des = des;
+        this.commitment = commitment;
+        this.location = location;
+        this.noOfParticipants = noOfParticipants;
+    }
+
 }

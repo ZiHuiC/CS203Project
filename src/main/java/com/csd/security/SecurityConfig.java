@@ -73,6 +73,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE, "/user/removal/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/user/reseting/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/listingpage/edit/{id}").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/listingpage/newlisting**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage/*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/application/*").hasAnyRole("USER", "ADMIN")

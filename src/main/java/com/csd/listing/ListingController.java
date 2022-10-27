@@ -6,10 +6,13 @@ import com.csd.listing.tag.TagNotFoundException;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
 import com.csd.user.exceptions.UserNotFoundException;
+import com.csd.user.exceptions.UserNotMatchedException;
 import com.csd.user.UserRepository;
 import com.csd.user.UserServiceImpl;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
@@ -20,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Filter;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -109,4 +114,31 @@ public class ListingController {
         return new ListingDTO(listings.findListingById(id).get());
     }
 
+    @PutMapping("/listingpage/edit/{id}")
+    public ListingDTO updateListingById(@PathVariable Long id, 
+            @Valid @RequestBody ListingChangeDTO newListingDetails
+            ) {
+        Optional<Listing> searchedListing = listings.findListingById(id);
+        if (searchedListing.isEmpty())
+            throw new ListingNotFoundException(id);
+        Listing oldListing = searchedListing.get();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String authName = auth.getName();
+
+        if (userService.getUser(authName).getId() == oldListing.getLister().getId()
+                || authName.compareTo("admin@lendahand.com") == 0){
+            oldListing.setName(newListingDetails.getName());
+            oldListing.setDes(newListingDetails.getDes());
+            oldListing.setCommitment(newListingDetails.getCommitment());
+            oldListing.setPhoto(newListingDetails.getPhoto());
+            oldListing.setLocation(newListingDetails.getLocation());
+            oldListing.setNoOfParticipants(newListingDetails.getNoOfParticipants());
+
+            return tags.findTagByValue(newListingDetails.getTag()).map(tag -> {
+                oldListing.setTag(tag);
+                return new ListingDTO(listings.save(oldListing));
+            }).orElseThrow(()->new TagNotFoundException(newListingDetails.getTag()));
+        }
+        throw new UserNotMatchedException(oldListing.getId());
+    }
 }

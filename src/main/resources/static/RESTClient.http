@@ -36,8 +36,8 @@ POST http://localhost:8080/newuser
 Content-Type: application/json
 
 {
-    "username" : "a string(email)",
-    "password" : "a string",
+    "username" : "string(email)",
+    "password" : "string",
     "firstname" : "string",
     "lastname" : "string",
     "contactNo" : "12345678"
@@ -59,6 +59,34 @@ Content-Type: application/json
 #get a listings based on its id
 GET http://localhost:8080/listingpage/1
 Content-Type: application/json
+###
+PUT  http://localhost:8080/listingpage/edit/1
+Content-Type: application/json
+Authorization: Basic string(email) string
+
+{
+    "name" : "w",
+    "des" : "a",
+    "noOfParticipants" : 1,
+    "photo":null,
+    "commitment":"ad-hoc",
+    "location":"east",
+    "tag" : "Others"
+}
+###
+PUT  http://localhost:8080/listingpage/edit/1
+Content-Type: application/json
+Authorization: Basic admin@lendahand.com password
+
+{
+    "name" : "w",
+    "des" : "a",
+    "noOfParticipants" : 1,
+    "photo":null,
+    "commitment":"ad-hoc",
+    "location":"east",
+    "tag" : "Others"
+}
 ###
 #put user id in the {id}
 POST http://localhost:8080/listingpage/newlisting?userId=1&tagName=Others
