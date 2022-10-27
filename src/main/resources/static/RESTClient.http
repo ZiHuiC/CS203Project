@@ -24,6 +24,13 @@ Content-Type: application/json
     "password": "new"
 }
 ###
+PUT http://localhost:8080/user/reseting/contact/2
+Content-Type: application/json
+
+{
+    "contact": "12345678"
+}
+###
 #when gettin info adding a user
 POST http://localhost:8080/newuser
 Content-Type: application/json

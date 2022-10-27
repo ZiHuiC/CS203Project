@@ -3,16 +3,23 @@ package com.csd.user;
 import java.util.List;
 import java.util.Optional;
 
+import com.csd.user.UserDTOs.UserContactDTO;
+import com.csd.user.UserDTOs.UserDTO;
+import com.csd.user.UserDTOs.UserNameDTO;
+import com.csd.user.UserDTOs.UserPasswordDTO;
 import com.csd.user.exceptions.UserNotFoundException;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
     private UserRepository users;
+    private BCryptPasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository users){
+    public UserServiceImpl(UserRepository users, BCryptPasswordEncoder encoder){
         this.users = users;
+        this.encoder = encoder;
     }
 
     @Override
@@ -40,12 +47,44 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(User user){
-        Optional<User> sameUsername = users.findById(user.getId());
-        if (sameUsername.isPresent())
-            return users.save(user);
+    public User updateUserContact(Long id, UserContactDTO userDTO){
+        Optional<User> usersResult = users.findById(id);
+        if (usersResult.isPresent()){
+            User user = usersResult.get();
+            user.setContactNo(userDTO.getContact());
+            User result = users.save(user);
+            return result;
+        }
+        
         else
-            throw new UserNotFoundException(user.getId());
+            throw new UserNotFoundException(id);
+    }
+
+    @Override
+    public User updateUserName(Long id, UserNameDTO userDTO){
+        Optional<User> usersResult = users.findById(id);
+        if (usersResult.isPresent()){
+            User user = usersResult.get();
+            user.setFirstname((userDTO.getFirstname()));
+            user.setLastname((userDTO.getLastname()));
+            return users.save(user);
+        }
+        
+        else
+            throw new UserNotFoundException(id);
+    }
+
+    @Override
+    public User updateUserPassword(Long id, UserPasswordDTO userDTO){
+        Optional<User> usersResult = users.findById(id);
+        if (usersResult.isPresent()){
+            User user = usersResult.get();
+            user.setPassword(encoder.encode(userDTO.getPassword()));
+            return users.save(user);
+        }
+        
+        else
+            throw new UserNotFoundException(id);
     }
 
     @Override

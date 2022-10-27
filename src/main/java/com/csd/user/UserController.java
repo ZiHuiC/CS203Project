@@ -8,7 +8,6 @@ import com.csd.user.UserDTOs.UserNameDTO;
 import com.csd.user.UserDTOs.UserPasswordDTO;
 import com.csd.user.exceptions.UserExistsException;
 import com.csd.user.exceptions.UserNotFoundException;
-import com.csd.user.exceptions.WrongPasswordException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -102,13 +101,7 @@ public class UserController {
      */
     @PutMapping("/user/reseting/name/{id}")
     public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
-        User user = userService.getUser(id);
-        if (user == null)
-            throw new UserNotFoundException(id);
-        
-        user.setFirstname(updatedUser.getFirstname());
-        user.setLastname(updatedUser.getLastname());
-        return new UserDTO(userService.updateUser(user));
+        return new UserDTO(userService.updateUserName(id, updatedUser));
     }
 
     /**
@@ -119,14 +112,7 @@ public class UserController {
      */
     @PutMapping("/user/reseting/password/{id}")
     public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
-        User user = userService.getUser(id);
-        if (user == null)
-            throw new UserNotFoundException(id);
-        // String encodedOldPassword = encoder.encode(updatedUser.getOldPassword());
-        // if (user.getPassword().compareTo(encodedOldPassword) != 0)
-        //     throw new WrongPasswordException(encodedOldPassword);
-        user.setPassword(updatedUser.getPassword());
-        return new UserDTO(userService.updateUser(user));
+        return new UserDTO(userService.updateUserPassword(id, updatedUser));
     }
 
     /**
@@ -137,10 +123,6 @@ public class UserController {
      */
     @PutMapping("/user/reseting/contact/{id}")
     public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
-        User user = userService.getUser(id);
-        if (user == null)
-            throw new UserNotFoundException(id);
-        user.setContactNo(updatedUser.getContact());
-        return new UserDTO(userService.updateUser(user));
+        return new UserDTO(userService.updateUserContact(id, updatedUser));
     }
 }
