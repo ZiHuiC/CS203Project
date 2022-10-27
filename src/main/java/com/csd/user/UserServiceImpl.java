@@ -52,8 +52,7 @@ public class UserServiceImpl implements UserService{
         if (usersResult.isPresent()){
             User user = usersResult.get();
             user.setContactNo(userDTO.getContact());
-            User result = users.save(user);
-            return result;
+            return users.save(user);
         }
         
         else
