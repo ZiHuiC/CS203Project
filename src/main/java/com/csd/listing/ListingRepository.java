@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
 
@@ -26,6 +28,8 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     List<Listing> findByCommitmentAndTag(String commitment, Tag tags);
 
     List<Listing> findByListerAndCommitmentAndTag(User user, String commitment, Tag tag);
+    @Transactional
+    void deleteByName(String name);
 
 //    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE l.commitment = LOWER(:commitment) AND t = LOWER(:tag)")
 //    List<Listing> retrieveByCommitmentFilterByTag(@Param("commitment") String commitment, @Param("tag") String tag);

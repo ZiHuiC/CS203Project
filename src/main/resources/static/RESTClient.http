@@ -59,6 +59,7 @@ Content-Type: application/json
 #get a listings based on its id
 GET http://localhost:8080/listingpage/1
 Content-Type: application/json
+Authorization: Basic admin@lendahand.com password
 ###
 PUT  http://localhost:8080/listingpage/edit/1
 Content-Type: application/json
@@ -105,9 +106,8 @@ GET http://localhost:8080/user/applications?userId=1
 Content-Type: application/json
 
 ###
-DELETE  http://localhost:8080/listingpage/removal/4
+DELETE  http://localhost:8080/listingpage/removal/6
 Content-Type: application/json
-Authorization: Basic admin@lendahand.com password
 ###
 #put application id in the {id}
 GET http://localhost:8080/application/1

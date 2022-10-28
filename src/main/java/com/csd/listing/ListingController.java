@@ -139,7 +139,7 @@ public class ListingController {
                 return new ListingDTO(listings.save(oldListing));
             }).orElseThrow(()->new TagNotFoundException(newListingDetails.getTag()));
         }
-        throw new UserNotMatchedException(oldListing.getId());
+        throw new UserNotMatchedException(oldListing.getLister().getId());
     }
 
     @DeleteMapping("/listingpage/removal/{id}")
@@ -154,6 +154,6 @@ public class ListingController {
                 || authName.compareTo("admin@lendahand.com") == 0)
             listings.deleteById(id);
         else 
-            throw new UserNotMatchedException(listing.getId());
+            throw new UserNotMatchedException(listing.getLister().getId());
     }
 }

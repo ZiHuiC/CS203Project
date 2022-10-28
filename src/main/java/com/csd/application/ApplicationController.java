@@ -1,14 +1,21 @@
 package com.csd.application;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.csd.application.exception.ApplicationNotFoundException;
+import com.csd.listing.Listing;
 import com.csd.listing.ListingRepository;
 import com.csd.listing.exceptions.ListingNotFoundException;
 import com.csd.user.UserRepository;
+import com.csd.user.UserService;
 import com.csd.user.exceptions.UserNotFoundException;
+import com.csd.user.exceptions.UserNotMatchedException;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +30,14 @@ public class ApplicationController {
     private final ApplicationRepository applications;
     private final ListingRepository listings;
     private final UserRepository users;
+    private UserService userService;
 
-    public ApplicationController(ApplicationRepository applications, ListingRepository listings, UserRepository users){
+    public ApplicationController(ApplicationRepository applications, ListingRepository listings, 
+            UserRepository users, UserService userService){
         this.applications = applications;
         this.listings = listings;
         this.users = users;
+        this.userService = userService;
     }
 
     @GetMapping("/application/{id}")
@@ -65,5 +75,18 @@ public class ApplicationController {
         return new ApplicationDTO(applications.save(application));
     }
 
+    @DeleteMapping("/listingpage/{listingid}/application/removal/{id}")
+    public void deleteListing(@PathVariable Long listingid, @PathVariable Long id){
+        Optional<Application> searchedApp = applications.findApplicationById(id);
+        if (searchedApp.isEmpty())
+            throw new ApplicationNotFoundException(id);
+        Application app = searchedApp.get();
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        if (userService.getUser(authName).getId() == app.getListing().getLister().getId()
+                || authName.compareTo("admin@lendahand.com") == 0)
+            applications.deleteById(id);
+        else 
+            throw new UserNotMatchedException(app.getListing().getLister().getId());
+    }
 }
