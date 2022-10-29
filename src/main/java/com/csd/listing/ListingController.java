@@ -98,7 +98,7 @@ public class ListingController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/listingpage/newlisting/imageupload")
-    public ImageModel saveUser(@RequestParam Long id,
+    public ImageModel saveImage(@RequestParam Long id,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
         ImageModel img = new ImageModel(multipartFile.getOriginalFilename(), multipartFile.getContentType(),
                 multipartFile.getBytes());
