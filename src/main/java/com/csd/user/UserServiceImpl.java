@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.csd.user.UserDTOs.UserContactDTO;
-import com.csd.user.UserDTOs.UserDTO;
 import com.csd.user.UserDTOs.UserNameDTO;
 import com.csd.user.UserDTOs.UserPasswordDTO;
 import com.csd.user.exceptions.UserNotFoundException;

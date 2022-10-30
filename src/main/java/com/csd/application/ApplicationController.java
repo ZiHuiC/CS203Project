@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.csd.application.exception.ApplicationNotFoundException;
-import com.csd.listing.Listing;
 import com.csd.listing.ListingRepository;
 import com.csd.listing.exceptions.ListingNotFoundException;
 import com.csd.user.UserRepository;

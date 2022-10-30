@@ -7,7 +7,6 @@ import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
 import com.csd.user.exceptions.UserNotFoundException;
 import com.csd.user.exceptions.UserNotMatchedException;
-import com.csd.user.UserRepository;
 import com.csd.user.UserServiceImpl;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Filter;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;

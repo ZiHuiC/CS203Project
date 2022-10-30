@@ -1,5 +1,6 @@
 package com.csd.application;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.csd.user.User;
@@ -12,4 +13,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long>{
     
     Optional<Application> findApplicationById(Long id);
     Iterable<Application> findAllByApplicant(User applicant);
+    List<Application> findApplicationByMessage(String message);
 }

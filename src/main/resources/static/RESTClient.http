@@ -90,7 +90,7 @@ Authorization: Basic admin@lendahand.com password
 }
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=1&tagName=Others
+POST http://localhost:8080/listingpage/newlisting?userId=2&tagName=Others
 Content-Type: application/json
 
 {
@@ -114,8 +114,12 @@ GET http://localhost:8080/application/1
 Content-Type: application/json
 
 ###
+GET http://localhost:8080/user/applications?userId=2
+Content-Type: application/json
+
+###
 #put the corresponding ids in the {}
-POST http://localhost:8080/listingpage/1/newapplication?userId=1
+POST http://localhost:8080/listingpage/36/newapplication?userId=4
 Content-Type: application/json
 
 {
