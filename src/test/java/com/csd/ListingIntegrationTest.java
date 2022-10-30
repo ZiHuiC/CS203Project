@@ -223,6 +223,7 @@ public class ListingIntegrationTest {
 
     @Test
 	public void deleteListing_NotAuthorized_Fail() throws Exception {
+        addListing1();
         addTestLendahand();
         URI uri = new URI(baseUrl + port + "/listingpage/removal/" + 
             findListingIdByName("test listing 1"));
