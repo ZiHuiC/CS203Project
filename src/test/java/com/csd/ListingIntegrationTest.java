@@ -325,8 +325,29 @@ public class ListingIntegrationTest {
             statusCode(404);
     }
 
+    // @Test
+	// public void addListing_NotAuthorized_Fail() throws Exception {
+    //     addAdmin();
+    //     addTestLendahand();
+    //     createTestTag();
+    //     URI uri = new URI(baseUrl + port + "/listingpage/newlisting?userId=" +
+    //         findUserIdByUsername("admin@lendahand.com") + "&tagName=test");
+    //     JSONObject requestParams = new JSONObject();
+    //     requestParams.put("name", "testlisting2");
+    //     requestParams.put("des", "pass");
+    //     requestParams.put("commitment", "ad-hoc");
+    //     requestParams.put("location", "east");
+    
+    //     given().auth().basic("test@lendahand.com", "password")
+    //         .accept("*/*").contentType("application/json")
+    //         .body(requestParams.toJSONString())
+    //         .post(uri).
+    //     then().
+    //         statusCode(403);
+    // }
+
     @Test
-	public void editListingById_Success() throws Exception {
+	public void updateListingById_Success() throws Exception {
         addListing1();
         createTestTag2();
         URI uri = new URI(baseUrl + port + "/listingpage/edit/" 
@@ -352,7 +373,29 @@ public class ListingIntegrationTest {
     }
 
     @Test
-	public void editListing_NotAuthenticated_Fail() throws Exception {
+	public void updateListingById_NotAuthorized_Fail() throws Exception {
+        addListing1();
+        createTestTag2();
+        addTestLendahand();
+        URI uri = new URI(baseUrl + port + "/listingpage/edit/" 
+            + findListingIdByName("test listing 1"));
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("name", "test listing 1");
+        requestParams.put("des", "pass");
+        requestParams.put("commitment", "3days");
+        requestParams.put("location", "West");
+        requestParams.put("tag", "test2");
+    
+        given().auth().basic("test@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .put(uri).
+        then().
+            statusCode(403);
+    }
+
+    @Test
+	public void updateListingById_NotAuthenticated_Fail() throws Exception {
         URI uri = new URI(baseUrl + port + "/listingpage/edit/1" );
         JSONObject requestParams = new JSONObject();
         requestParams.put("name", "test listing 1");
@@ -370,7 +413,7 @@ public class ListingIntegrationTest {
     }
 
     @Test
-	public void editListing_UserNotFound_Fail() throws Exception {
+	public void updateListingById_UserNotFound_Fail() throws Exception {
         addAdmin();
         URI uri = new URI(baseUrl + port + "/listingpage/edit/999999999999");
         JSONObject requestParams = new JSONObject();
@@ -389,7 +432,7 @@ public class ListingIntegrationTest {
     }
 
     @Test
-	public void editListing_TagNotFound_Fail() throws Exception {
+	public void updateListingById_TagNotFound_Fail() throws Exception {
         addListing1();
         createTestTag2();
         URI uri = new URI(baseUrl + port + "/listingpage/edit/" 
@@ -407,32 +450,6 @@ public class ListingIntegrationTest {
             .put(uri).
         then().
             statusCode(404);
-    }
-
-    @Test
-	public void editListing_NotAuthorized_Fail() throws Exception {
-        addAdmin();
-        addTestLendahand();
-        createTestTag();
-        URI uri = new URI(baseUrl + port + "/listingpage/newlisting?userId=" +
-            findUserIdByUsername("admin@lendahand.com") + "&tagName=test");
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("name", "testlisting2");
-        requestParams.put("des", "pass");
-        requestParams.put("commitment", "ad-hoc");
-        requestParams.put("location", "east");
-    
-        given().auth().basic("test@lendahand.com", "password")
-            .accept("*/*").contentType("application/json")
-            .body(requestParams.toJSONString())
-            .post(uri).
-        then().
-            statusCode(201).
-			body("id", equalTo(findListingIdByName("testlisting2").intValue()), 
-            "name", equalTo("testlisting2"),
-            "des", equalTo("pass"),
-            "commitment", equalTo("ad-hoc"),
-            "location", equalTo("east"));
     }
 
     //must run without other listings
