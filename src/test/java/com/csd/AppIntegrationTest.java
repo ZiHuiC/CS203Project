@@ -70,6 +70,12 @@ public class AppIntegrationTest {
                 applications.deleteById(app.getId());
             }
         }
+        List<Application> listOfApp2 = applications.findApplicationByMessage("testapp2");
+        if (listOfApp.size() != 0){
+            for (Application app: listOfApp2){
+                applications.deleteById(app.getId());
+            }
+        }
         if (!listings.findByName("test listing 1").isEmpty())
             listings.deleteByName("test listing 1");
         if (!listings.findByName("testlisting2").isEmpty())
@@ -120,13 +126,6 @@ public class AppIntegrationTest {
 		}
     }
 
-    private void createTestTag2() {
-		if (tags.findTagByValue("test2").isEmpty()){
-			Tag tag = new Tag("test2");
-            tags.save(tag);
-		}
-    }
-
     private Listing addListing1() {
         addAdmin();
         createTestTag();
@@ -142,21 +141,6 @@ public class AppIntegrationTest {
         return listings.findByName("test listing 1").get();
     }
 
-    private Listing addListing3() {
-        addAdmin();
-        createTestTag2();
-        if (listings.findByName("test listing 3").isEmpty()){
-            Listing listing = new Listing(
-                "test listing 3",  "des", 
-                "ad-hoc",  "location"
-            );
-            listing.setLister(users.findByUsername("admin@lendahand.com").get());
-			listing.setTag(tags.findTagByValue("test2").get());
-			return listings.save(listing);
-        }
-        return listings.findByName("test listing 3").get();
-    }
-
     private Application addApplication1() {
         addListing1();
         if (applications.findApplicationByMessage("testapp1").isEmpty()){
@@ -167,7 +151,6 @@ public class AppIntegrationTest {
         }
         return applications.findApplicationByMessage("testapp1").get(0);
     }
-    
 
     private Long findListingIdByName(String name) {
         return listings.findByName(name).get().getId();
@@ -266,6 +249,121 @@ public class AppIntegrationTest {
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
             .get(uri).
+        then().
+            statusCode(404);
+    }
+
+    @Test
+    public void addApplication_Success() throws Exception{
+        addListing1(); 
+        URI uri = new URI(baseUrl + port + "/listingpage/" + 
+                findListingIdByName("test listing 1") + "/newapplication?userId=" + 
+                findUserIdByUsername("admin@lendahand.com"));
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("message", "testapp1");
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .post(uri).
+        then().
+            statusCode(200).
+			body("id", equalTo(findFirstAppIdByMessage("testapp1").intValue()), 
+            "message", equalTo("testapp1"));
+    }
+
+    @Test
+    public void addApplication_NotAuthenticated_Error401() throws Exception{
+        URI uri = new URI(baseUrl + port + "/listingpage/1/newapplication?userId=1");
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("message", "notauth");
+
+        given()
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .post(uri).
+        then().
+            statusCode(401);
+    }
+
+    @Test
+    public void addApplication_UserNotFound_Error404() throws Exception{
+        addAdmin();
+        URI uri = new URI(baseUrl + port + "/listingpage/1/newapplication?userId=999999999999999");
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("message", "notfound");
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .post(uri).
+        then().
+            statusCode(404);
+    }
+
+    @Test
+    public void addApplication_ListingNotFound_Error404() throws Exception{
+        addAdmin();
+        URI uri = new URI(baseUrl + port + "/listingpage/99999999999999/newapplication?userId="+ 
+                findUserIdByUsername("admin@lendahand.com"));
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("message", "notfound");
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .post(uri).
+        then().
+            statusCode(404);
+    }
+    
+    @Test
+    public void deleteApplication_Success() throws Exception{
+        addApplication1(); 
+        URI uri = new URI(baseUrl + port + "/listingpage/application/removal/" + 
+                findFirstAppIdByMessage("testapp1"));
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .delete(uri).
+        then().
+            statusCode(200);
+    }
+
+    @Test
+    public void deleteApplication_NotAuthenticated_Error401() throws Exception{
+        addApplication1(); 
+        URI uri = new URI(baseUrl + port + "/listingpage/application/removal/1");
+
+        given()
+            .accept("*/*").contentType("application/json")
+            .delete(uri).
+        then().
+            statusCode(401);
+    }
+
+    @Test
+    public void deleteApplication_NotAuthenticated_Error403() throws Exception{
+        addApplication1(); 
+        addTestLendahand();
+        URI uri = new URI(baseUrl + port + "/listingpage/application/removal/" + 
+                findFirstAppIdByMessage("testapp1"));
+
+        given().auth().basic("test@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .delete(uri).
+        then().
+            statusCode(403);
+    }
+
+    @Test
+    public void deleteApplication_AppNotFound_Error404() throws Exception{
+        addAdmin();
+        URI uri = new URI(baseUrl + port + "/listingpage/application/removal/999999999999999");
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .delete(uri).
         then().
             statusCode(404);
     }

@@ -74,8 +74,8 @@ public class ApplicationController {
         return new ApplicationDTO(applications.save(application));
     }
 
-    @DeleteMapping("/listingpage/{listingid}/application/removal/{id}")
-    public void deleteListing(@PathVariable Long listingid, @PathVariable Long id){
+    @DeleteMapping("/listingpage/application/removal/{id}")
+    public void deleteApplication(@PathVariable Long id){
         Optional<Application> searchedApp = applications.findApplicationById(id);
         if (searchedApp.isEmpty())
             throw new ApplicationNotFoundException(id);
