@@ -52,8 +52,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/listingpage?username=user@gmail.com
+GET http://localhost:8080/localhost:8080/listingpage
 Content-Type: application/json
+
+{
+    "username":"admin@lendahand.com"
+}
 
 ###
 #get a listings based on its id
