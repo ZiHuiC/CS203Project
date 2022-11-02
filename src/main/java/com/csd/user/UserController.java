@@ -2,10 +2,7 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
-import com.csd.user.UserDTOs.UserContactDTO;
-import com.csd.user.UserDTOs.UserDTO;
-import com.csd.user.UserDTOs.UserNameDTO;
-import com.csd.user.UserDTOs.UserPasswordDTO;
+import com.csd.user.UserDTOs.*;
 import com.csd.user.exceptions.UserExistsException;
 import com.csd.user.exceptions.UserNotFoundException;
 
@@ -124,5 +121,16 @@ public class UserController {
     @PutMapping("/user/reseting/contact/{id}")
     public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
         return new UserDTO(userService.updateUserContact(id, updatedUser));
+    }
+
+    /**
+     * update a specific user detail by id
+     * @param id
+     * @param updatedUser
+     * @return the updated UserDTO
+     */
+    @PutMapping("/user/reseting/profile/{id}")
+    public UserDTO updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileDTO updatedUser) {
+        return new UserDTO(userService.updateUserProfile(id, updatedUser));
     }
 }
