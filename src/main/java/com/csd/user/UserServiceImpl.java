@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.csd.user.UserDTOs.UserContactDTO;
 import com.csd.user.UserDTOs.UserNameDTO;
 import com.csd.user.UserDTOs.UserPasswordDTO;
+import com.csd.user.UserDTOs.UserProfileDTO;
 import com.csd.user.exceptions.UserNotFoundException;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -86,6 +87,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User updateUserProfile(Long id, UserProfileDTO userDTO) {
+        Optional<User> usersResult = users.findById(id);
+        if (usersResult.isPresent()) {
+            User user = usersResult.get();
+            user.setFirstname(userDTO.getFirstname());
+            user.setLastname(userDTO.getLastname());
+            user.setContactNo(userDTO.getContact());
+            return users.save(user);
+        } else
+            throw new UserNotFoundException(id);
+    }
+
+        @Override
     public void deleteUser(Long id){
         users.deleteById(id);
     }

@@ -9,8 +9,10 @@ import com.csd.user.exceptions.UserNotFoundException;
 import com.csd.user.exceptions.UserNotMatchedException;
 import com.csd.user.UserServiceImpl;
 
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -95,9 +97,9 @@ public class ListingController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/listingpage/newlisting/imageupload")
+    @PostMapping(value="/listingpage/newlisting/imageupload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ImageModel saveImage(@RequestParam Long id,
-                                 @RequestBody MultipartFile image) throws IOException {
+                                 @RequestParam (required=true, value="image") MultipartFile image) throws IOException {
         ImageModel img = new ImageModel(image.getOriginalFilename(), image.getContentType(),
                 image.getBytes());
         listings.getReferenceById(id).setPhoto(img);

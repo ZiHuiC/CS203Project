@@ -2,10 +2,7 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
-import com.csd.user.UserDTOs.UserContactDTO;
-import com.csd.user.UserDTOs.UserDTO;
-import com.csd.user.UserDTOs.UserNameDTO;
-import com.csd.user.UserDTOs.UserPasswordDTO;
+import com.csd.user.UserDTOs.*;
 import com.csd.user.exceptions.UserExistsException;
 import com.csd.user.exceptions.UserNotFoundException;
 
@@ -99,7 +96,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/name/{id}")
+    @PutMapping("/user/resetting/name/{id}")
     public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
         return new UserDTO(userService.updateUserName(id, updatedUser));
     }
@@ -110,7 +107,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/password/{id}")
+    @PutMapping("/user/resetting/password/{id}")
     public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
         return new UserDTO(userService.updateUserPassword(id, updatedUser));
     }
@@ -121,8 +118,19 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/contact/{id}")
+    @PutMapping("/user/resetting/contact/{id}")
     public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
         return new UserDTO(userService.updateUserContact(id, updatedUser));
+    }
+
+    /**
+     * update a specific user detail by id
+     * @param id
+     * @param updatedUser
+     * @return the updated UserDTO
+     */
+    @PutMapping("/user/resetting/profile/{id}")
+    public UserDTO updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileDTO updatedUser) {
+        return new UserDTO(userService.updateUserProfile(id, updatedUser));
     }
 }
