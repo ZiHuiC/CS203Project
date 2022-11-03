@@ -96,7 +96,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/name/{id}")
+    @PutMapping("/user/resetting/name/{id}")
     public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
         return new UserDTO(userService.updateUserName(id, updatedUser));
     }
@@ -107,7 +107,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/password/{id}")
+    @PutMapping("/user/resetting/password/{id}")
     public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
         return new UserDTO(userService.updateUserPassword(id, updatedUser));
     }
@@ -118,7 +118,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/contact/{id}")
+    @PutMapping("/user/resetting/contact/{id}")
     public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
         return new UserDTO(userService.updateUserContact(id, updatedUser));
     }
@@ -129,7 +129,7 @@ public class UserController {
      * @param updatedUser
      * @return the updated UserDTO
      */
-    @PutMapping("/user/reseting/profile/{id}")
+    @PutMapping("/user/resetting/profile/{id}")
     public UserDTO updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileDTO updatedUser) {
         return new UserDTO(userService.updateUserProfile(id, updatedUser));
     }

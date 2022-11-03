@@ -302,7 +302,7 @@ class UserIntegrationTest {
         addAdmin();
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/name/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/name/" +
                 users.findByUsername("test@lendahand.com").get().getId());
 
         JSONObject requestParams = new JSONObject();
@@ -323,7 +323,7 @@ class UserIntegrationTest {
 
     @Test
 	public void updateUserName_NotAuthenticated_Fail() throws Exception {
-        URI uri = new URI(baseUrl + port + "/user/reseting/name/1");
+        URI uri = new URI(baseUrl + port + "/user/resetting/name/1");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("firstname", "pat");
@@ -341,7 +341,7 @@ class UserIntegrationTest {
     public void updateUserName_NoRequestBody_Fail() throws Exception{
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/name/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/name/" +
                 users.findByUsername("test@lendahand.com").get().getId());
         
         given().auth().basic("admin@lendahand.com", "password")
@@ -353,7 +353,7 @@ class UserIntegrationTest {
 
     @Test
     public void updateUserName_UserNotFound_Fail() throws Exception{
-        URI uri = new URI(baseUrl + port + "/user/reseting/name/99999999");
+        URI uri = new URI(baseUrl + port + "/user/resetting/name/99999999");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("firstname", "pat");
@@ -372,7 +372,7 @@ class UserIntegrationTest {
         addAdmin();
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/password/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/password/" +
                 users.findByUsername("test@lendahand.com").get().getId());
 
         JSONObject requestParams = new JSONObject();
@@ -392,7 +392,7 @@ class UserIntegrationTest {
 
     @Test
 	public void updateUserPassword_NotAuthenticated_Fail() throws Exception {
-        URI uri = new URI(baseUrl + port + "/user/reseting/password/1");
+        URI uri = new URI(baseUrl + port + "/user/resetting/password/1");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("password", "pat");
@@ -409,7 +409,7 @@ class UserIntegrationTest {
     public void updateUserPassword_NoRequestBody_Fail() throws Exception{
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/password/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/password/" +
                 users.findByUsername("test@lendahand.com").get().getId());
         
         given().auth().basic("admin@lendahand.com", "password")
@@ -421,7 +421,7 @@ class UserIntegrationTest {
 
     @Test
     public void updateUserPassword_UserNotFound_Fail() throws Exception{
-        URI uri = new URI(baseUrl + port + "/user/reseting/password/99999999");
+        URI uri = new URI(baseUrl + port + "/user/resetting/password/99999999");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("password", "pat");
@@ -439,7 +439,7 @@ class UserIntegrationTest {
         addAdmin();
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/contact/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/contact/" +
                 users.findByUsername("test@lendahand.com").get().getId());
 
         JSONObject requestParams = new JSONObject();
@@ -459,7 +459,7 @@ class UserIntegrationTest {
 
     @Test
 	public void updateUserContact_NotAuthenticated_Fail() throws Exception {
-        URI uri = new URI(baseUrl + port + "/user/reseting/contact/1");
+        URI uri = new URI(baseUrl + port + "/user/resetting/contact/1");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("contact", "88881111");
@@ -476,7 +476,7 @@ class UserIntegrationTest {
     public void updateUserContact_NoRequestBody_Fail() throws Exception{
         addTestLendahand();
                 
-        URI uri = new URI(baseUrl + port + "/user/reseting/contact/" + 
+        URI uri = new URI(baseUrl + port + "/user/resetting/contact/" +
                 users.findByUsername("test@lendahand.com").get().getId());
         
         given().auth().basic("admin@lendahand.com", "password")
@@ -488,7 +488,7 @@ class UserIntegrationTest {
 
     @Test
     public void updateUserContact_UserNotFound_Fail() throws Exception{
-        URI uri = new URI(baseUrl + port + "/user/reseting/contact/99999999");
+        URI uri = new URI(baseUrl + port + "/user/resetting/contact/99999999");
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("contact", "88881111");
