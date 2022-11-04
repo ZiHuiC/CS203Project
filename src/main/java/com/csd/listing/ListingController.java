@@ -99,13 +99,12 @@ public class ListingController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value="/listingpage/newlisting/imageupload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ImageModel saveImage(@RequestParam Long id,
-                                 @RequestParam (required=true, value="image") MultipartFile image) throws IOException {
+                                 @RequestParam (value="image") MultipartFile image) throws IOException {
         ImageModel img = new ImageModel(image.getOriginalFilename(), image.getContentType(),
                 image.getBytes());
         listings.getReferenceById(id).setPhoto(img);
         return images.save(img);
     }
-
 
     @GetMapping("/listingpage/{id}")
     public ListingDTO findListingById(@PathVariable Long id) {

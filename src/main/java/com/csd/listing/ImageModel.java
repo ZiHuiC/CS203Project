@@ -1,5 +1,7 @@
 package com.csd.listing;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 @Entity
 @Table(name = "image_table")
@@ -22,7 +24,8 @@ public class ImageModel {
     private String type;
     //image bytes can have large lengths so we specify a value
     //which is more than the default length for picByte column
-    @Column(name = "picByte", length = 1000)
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] picByte;
 
     public String getName() {
