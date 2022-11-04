@@ -500,4 +500,60 @@ class UserIntegrationTest {
         then().
             statusCode(404);
     }
+
+    @Test
+    public void updateUserProfile_Success() throws Exception{
+        addAdmin();
+        addTestLendahand();
+                
+        URI uri = new URI(baseUrl + port + "/user/resetting/profile/" +
+                users.findByUsername("test@lendahand.com").get().getId());
+
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("contact", "88811111");
+        requestParams.put("firstname", "new");
+        requestParams.put("lastname", "name");
+        
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json").
+            body(requestParams.toJSONString())
+            .put(uri).
+        then().
+            statusCode(200).
+            body("id", equalTo(users.findByUsername("test@lendahand.com").get().getId().intValue()), 
+                    "contactNo", equalTo("88811111"),
+                    "firstname", equalTo("new"),
+                    "lastname", equalTo("name"));
+    }
+
+    @Test
+	public void updateUserProfile_NotAuthenticated_Fail() throws Exception {
+        URI uri = new URI(baseUrl + port + "/user/resetting/profile/1");
+
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("contact", "88881111");
+        requestParams.put("firstname", "new");
+        requestParams.put("lastname", "name");
+        
+        given()
+            .accept("*/*").contentType("application/json")
+            .body(requestParams.toJSONString())
+            .put(uri).
+        then().
+            statusCode(401);
+    }
+
+    @Test
+    public void updateUserProfile_NoRequestBody_Fail() throws Exception{
+        addTestLendahand();
+                
+        URI uri = new URI(baseUrl + port + "/user/resetting/profile/" +
+                users.findByUsername("test@lendahand.com").get().getId());
+        
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .put(uri).
+        then().
+            statusCode(400);
+    }
 }
