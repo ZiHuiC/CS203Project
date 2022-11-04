@@ -31,7 +31,7 @@ public class ListingDTO {
         this.des = listing.getDes();
         this.noOfParticipants = listing.getNoOfParticipants();
         this.lister = new UserDTO(listing.getLister());
-        this.photo = listing.getPhoto();
+//        this.photo = listing.getPhoto();
         this.commitment = listing.getCommitment();
         this.location = listing.getLocation();
         this.tag = new TagDTO(listing.getTag());

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,6 +114,15 @@ public class ListingController {
 
         return new ListingDTO(listings.findListingById(id).get());
     }
+
+    @GetMapping(value = "/listingpage/{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getListingImage(@PathVariable Long id) throws IOException {
+        if (listings.findListingById(id).isEmpty())
+            throw new ListingNotFoundException(id);
+
+        return listings.findListingById(id).get().getPhoto().getPicByte();
+    }
+
 
     @PutMapping("/listingpage/edit/{id}")
     public ListingDTO updateListingById(@PathVariable Long id, 
