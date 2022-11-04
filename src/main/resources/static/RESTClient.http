@@ -52,7 +52,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/localhost:8080/listingpage
+GET http://localhost:8080/listingpage
 Content-Type: application/json
 
 {
