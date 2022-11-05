@@ -233,6 +233,37 @@ public class UserServiceTest {
     }
 
     @Test
+    void updateUserProfile_UserExist_ReturnUser(){
+        User user = new User(
+            "test", "password", "firstname",
+            "lastname", "62353535");
+        UserProfileDTO userDTO = new UserProfileDTO(
+        "99125290", "new", "name");
+        when(users.findById(any(Long.class))).thenReturn(Optional.of(user));
+        when(users.save(any(User.class))).thenReturn(user);
+
+        User updatedUser = userService.updateUserProfile(1L, userDTO);
+        
+        assertNotNull(updatedUser);
+        assertInstanceOf(User.class, updatedUser);
+        verify(users).findById(1L);
+    }
+
+    @Test
+    void updateUserProfile_UserDontExist_ThrowUserNotFoundException(){
+        UserProfileDTO userDTO = new UserProfileDTO(
+        "99125290", "new", "name");
+        when(users.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(
+                UserNotFoundException.class, 
+                () -> userService.updateUserProfile(1L, userDTO));
+        
+        verify(users).findById(1L);
+        assertTrue(exception.getMessage().contains("Could not find user:"));
+    }
+
+    @Test
     void deleteUser_Exist_(){
         doNothing().when(users).deleteById(anyLong());
         
