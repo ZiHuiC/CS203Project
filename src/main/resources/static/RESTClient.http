@@ -118,12 +118,16 @@ GET http://localhost:8080/application/1
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/user/applications?userId=2
+GET http://localhost:8080/user/applications?userId=4
+Content-Type: application/json
+
+###
+GET http://localhost:8080/user/applications?userId=4&listingId=83
 Content-Type: application/json
 
 ###
 #put the corresponding ids in the {}
-POST http://localhost:8080/listingpage/36/newapplication?userId=4
+POST http://localhost:8080/listingpage/83/newapplication?userId=4
 Content-Type: application/json
 
 {

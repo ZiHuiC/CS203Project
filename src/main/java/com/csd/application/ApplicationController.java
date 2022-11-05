@@ -1,5 +1,6 @@
 package com.csd.application;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,11 +51,25 @@ public class ApplicationController {
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
     @GetMapping("/user/applications")
-    public List<ApplicationDTO> getApplications(@RequestParam Long userId) {
+    public List<ApplicationDTO> getApplications(@RequestParam Long userId, @RequestParam(required = false) Long listingId) {
         var user = users.findById(userId);
         if (user.isEmpty())
             throw new UserNotFoundException(userId);
-        return user.get().getApplications().stream().map(ApplicationDTO::new).collect(Collectors.toList());
+        
+        List<Application> retrivedApplications = user.get().getApplications();
+        
+        if (listingId != null){
+            var listing = listings.findById(listingId);
+            if (listing.isEmpty())
+                throw new ListingNotFoundException(listingId);
+            Iterator<Application> itr = retrivedApplications.iterator();
+            while (itr.hasNext()){
+                Application app = itr.next();
+                if (app.getListing().getId() != listingId)
+                    itr.remove();
+            }
+        }
+        return retrivedApplications.stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping("/listingpage/{listingid}/newapplication")
