@@ -36,7 +36,7 @@ POST http://localhost:8080/newuser
 Content-Type: application/json
 
 {
-    "username" : "string(email)",
+    "username" : "testAWS",
     "password" : "string",
     "firstname" : "string",
     "lastname" : "string",
