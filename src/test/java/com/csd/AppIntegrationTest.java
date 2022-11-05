@@ -10,6 +10,7 @@ import com.csd.listing.tag.Tag;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
 import com.csd.user.UserRepository;
+import com.csd.user.UserServiceImpl;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.RedirectConfig.redirectConfig;
@@ -218,7 +219,7 @@ public class AppIntegrationTest {
 
     @Test
     public void getApplications_EmptyList_Success() throws Exception{
-        addAdmin();; 
+        addAdmin(); 
         URI uri = new URI(baseUrl + port + "/user/applications?userId=" + 
                 findUserIdByUsername("admin@lendahand.com"));
 
@@ -231,6 +232,21 @@ public class AppIntegrationTest {
     }
 
     @Test
+    public void getApplications_ListingId_Success() throws Exception{
+        addApplication1();
+        URI uri = new URI(baseUrl + port + "/user/applications?userId=" 
+                + findUserIdByUsername("admin@lendahand.com") 
+                + "&listingId=" + findListingIdByName("test listing 1"));
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .get(uri).
+        then().
+            statusCode(200).
+			body("size()", equalTo(1));
+    }
+
+    @Test
     public void getApplications_NotAuthenticated_Error401() throws Exception{
         URI uri = new URI(baseUrl + port + "/user/applications?userId=1");
 
@@ -239,6 +255,20 @@ public class AppIntegrationTest {
             .get(uri).
         then().
             statusCode(401);
+    }
+
+    @Test
+    public void getApplications_ListingNotFound_Error404() throws Exception{
+        addAdmin();
+        URI uri = new URI(baseUrl + port + "/user/applications?userId=" 
+                + findUserIdByUsername("admin@lendahand.com") 
+                + "&listingId=9999999999999999");
+
+        given().auth().basic("admin@lendahand.com", "password")
+            .accept("*/*").contentType("application/json")
+            .get(uri).
+        then().
+            statusCode(404);
     }
 
     @Test
