@@ -64,7 +64,8 @@ Content-Type: application/json
 {
     "username":"admin@lendahand.com",
     "tag":"Others",
-    "location":"east"
+    "location":"east",
+    "commitment":"ad-hoc"
 }
 ###
 GET http://localhost:8080/listingpage

@@ -34,23 +34,23 @@ public class FilterDTO {
                 '}';
     }
 
-    private static boolean isNull(String val) {
-        return val == null;
+    private static boolean isAll(String val) {
+        return val.toLowerCase() == "all";
     }
 
     private static boolean isCommitment(String commitment, Listing l) {
-        return isNull(commitment) ? true : Objects.equals(commitment, l.getCommitment());
+        return isAll(commitment) ? true : Objects.equals(commitment, l.getCommitment());
     }
 
     private static boolean isTag(String tag, Listing l) {
-        return isNull(tag) ? true : Objects.equals(tag, l.getTag().getValue());
+        return isAll(tag) ? true : Objects.equals(tag, l.getTag().getValue());
     }
 
     private static boolean isUsername(String username, Listing l) {
-        return isNull(username) ? true : Objects.equals(username, l.getLister().getUsername());
+        return isAll(username) ? true : Objects.equals(username, l.getLister().getUsername());
     }
 
     private static boolean isLocation(String location, Listing l) {
-        return isNull(location) ? true : Objects.equals(location, l.getLocation());
+        return isAll(location) ? true : Objects.equals(location, l.getLocation());
     }
 }
