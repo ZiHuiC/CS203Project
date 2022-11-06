@@ -35,7 +35,7 @@ public class FilterDTO {
     }
 
     private static boolean isAll(String val) {
-        return val.toLowerCase() == "all";
+        return val.toLowerCase().equals("all");
     }
 
     private static boolean isCommitment(String commitment, Listing l) {
