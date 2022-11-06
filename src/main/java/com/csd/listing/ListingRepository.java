@@ -4,8 +4,6 @@ import com.csd.listing.tag.Tag;
 import com.csd.user.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,9 +28,5 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     List<Listing> findByListerAndCommitmentAndTag(User user, String commitment, Tag tag);
     @Transactional
     void deleteByName(String name);
-
-//    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE l.commitment = LOWER(:commitment) AND t = LOWER(:tag)")
-//    List<Listing> retrieveByCommitmentFilterByTag(@Param("commitment") String commitment, @Param("tag") String tag);
-
 
 }

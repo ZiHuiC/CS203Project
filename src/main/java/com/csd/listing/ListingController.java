@@ -1,7 +1,6 @@
 package com.csd.listing;
 
 import com.csd.listing.exceptions.ListingNotFoundException;
-import com.csd.listing.tag.Tag;
 import com.csd.listing.tag.TagNotFoundException;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
@@ -10,17 +9,14 @@ import com.csd.user.exceptions.UserNotMatchedException;
 import com.csd.user.UserServiceImpl;
 
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

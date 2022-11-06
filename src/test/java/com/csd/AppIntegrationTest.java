@@ -10,7 +10,6 @@ import com.csd.listing.tag.Tag;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;
 import com.csd.user.UserRepository;
-import com.csd.user.UserServiceImpl;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.RedirectConfig.redirectConfig;

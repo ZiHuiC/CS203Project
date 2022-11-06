@@ -15,11 +15,13 @@ public class FilterDTO {
     private String commitment;
     private String tag;
     private String username;
-//    private String location;
+    private String location;
+
     public Boolean isValid(Listing l) {
         return Objects.equals(commitment, l.getCommitment())
                 && Objects.equals(tag, l.getTag().getValue())
-                && Objects.equals(username, l.getLister().getUsername());
+                && Objects.equals(username, l.getLister().getUsername())
+                && Objects.equals(location, l.getLocation());
     }
 
     @Override
@@ -28,6 +30,7 @@ public class FilterDTO {
                 "commitment='" + commitment + '\'' +
                 ", tag='" + tag + '\'' +
                 ", username='" + username + '\'' +
+                ", location='" + location + '\'' +
                 '}';
     }
 }
