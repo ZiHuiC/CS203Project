@@ -55,14 +55,14 @@ public class CsdApplication {
 		createTag(tags, "Recycling and Waste");
 		createTag(tags, "Others");
 
-		if (listings.findByName("Clean ECP").isEmpty()){
-			Listing listing = new Listing("Clean ECP", "Clean up ECP", "ad-hoc", "West");
-			listing.setLister(users.findByUsername("user@gmail.com").get());
-			listing.setTag(tags.findTagByValue("Coastal").get());
-			System.out.println("[Add listings]: " + listings.save(listing).getName());
-		}
-		else
-			System.out.println("Listing already added");
+		// if (listings.findByName("Clean ECP").isEmpty()){
+		// 	Listing listing = new Listing("Clean ECP", "Clean up ECP", "ad-hoc", "West");
+		// 	listing.setLister(users.findByUsername("user@gmail.com").get());
+		// 	listing.setTag(tags.findTagByValue("Coastal").get());
+		// 	System.out.println("[Add listings]: " + listings.save(listing).getName());
+		// }
+		// else
+		// 	System.out.println("Listing already added");
 	}
 
 	private static void createTag(TagRepository tags, String name) {

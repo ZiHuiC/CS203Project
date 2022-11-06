@@ -51,7 +51,22 @@ GET http://localhost:8080/listingpage
 Content-Type: application/json
 
 ###
+GET http://localhost:8080/listingpage?inName=clean
+Content-Type: application/json
 
+###
+GET http://localhost:8080/listingpage?inName=clean
+Content-Type: application/json
+###
+GET http://localhost:8080/listingpage
+Content-Type: application/json
+
+{
+    "username":"admin@lendahand.com",
+    "tag":"Others",
+    "location":"east"
+}
+###
 GET http://localhost:8080/listingpage
 Content-Type: application/json
 
@@ -79,7 +94,7 @@ Authorization: Basic string(email) string
     "tag" : "Others"
 }
 ###
-PUT  http://localhost:8080/listingpage/edit/1
+PUT  http://localhost:8080/listingpage/edit/4
 Content-Type: application/json
 Authorization: Basic admin@lendahand.com password
 
@@ -94,14 +109,14 @@ Authorization: Basic admin@lendahand.com password
 }
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=2&tagName=Others
+POST http://localhost:8080/listingpage/newlisting?userId=4&tagName=Others
 Content-Type: application/json
 
 {
     "name" : "string",
     "des" : "string",
     "commitment": "ad-hoc",
-    "location": "east"
+    "location": "west"
 }
 
 ###
@@ -118,12 +133,16 @@ GET http://localhost:8080/application/1
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/user/applications?userId=2
+GET http://localhost:8080/user/applications?userId=4
+Content-Type: application/json
+
+###
+GET http://localhost:8080/user/applications?userId=4&listingId=83
 Content-Type: application/json
 
 ###
 #put the corresponding ids in the {}
-POST http://localhost:8080/listingpage/36/newapplication?userId=4
+POST http://localhost:8080/listingpage/83/newapplication?userId=4
 Content-Type: application/json
 
 {
