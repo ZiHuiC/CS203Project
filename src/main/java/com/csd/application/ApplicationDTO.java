@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class ApplicationDTO {
     private Long id;
+    private Long listingId;
     private String message;
     private UserDTO applicant;
 
@@ -15,6 +16,7 @@ public class ApplicationDTO {
         this.id = application.getId();
         this.message = application.getMessage();
         this.applicant = new UserDTO(application.getApplicant());
+        this.listingId = application.getListing().getId();
     }
 
 }
