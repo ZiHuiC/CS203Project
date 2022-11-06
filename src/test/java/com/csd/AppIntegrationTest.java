@@ -176,6 +176,7 @@ public class AppIntegrationTest {
         then().
             statusCode(200).
 			body("id", equalTo(app.getId().intValue()), 
+                "listingId", equalTo(app.getListing().getId().intValue()),
             "message", equalTo(app.getMessage()));
     }
 
