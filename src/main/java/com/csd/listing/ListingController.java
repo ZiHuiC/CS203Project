@@ -43,6 +43,12 @@ public class ListingController {
         this.userService = userService;
     }
 
+    @GetMapping("/listingpage/mylistings")
+    public List<ListingDTO> findListingByUser(@RequestParam Long userId) {
+        User user = userService.getUser(userId);
+        return listings.findByLister(user).stream().map(ListingDTO::new).toList();
+    }
+
     @GetMapping("/listingpage")
     public List<ListingDTO> findListingByTitle(@RequestBody(required = false) FilterDTO filters, @RequestParam(required = false) String... inName) {
         if (filters == null && inName == null)
