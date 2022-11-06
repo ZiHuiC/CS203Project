@@ -57,6 +57,13 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/listingpage?inName=clean
 Content-Type: application/json
+
+{
+    "username":"all",
+    "tag":"all",
+    "location":"all",
+    "commitment":"all"
+}
 ###
 GET http://localhost:8080/listingpage
 Content-Type: application/json
@@ -68,14 +75,7 @@ Content-Type: application/json
     "commitment":"ad-hoc"
 }
 ###
-GET http://localhost:8080/listingpage
-Content-Type: application/json
 
-{
-    "username":"admin@lendahand.com"
-}
-
-###
 #get a listings based on its id
 GET http://localhost:8080/listingpage/1
 Content-Type: application/json
