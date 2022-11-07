@@ -59,7 +59,6 @@ public class ListingController {
      * @param filter
      * @return true if the filter has all the parameters. false otherwise.
      */
-
     private static boolean isFilterByAll(FilterDTO filter){
         return FilterDTO.isAll(filter.getCommitment()) 
             && FilterDTO.isAll(filter.getLocation())
@@ -69,10 +68,10 @@ public class ListingController {
 
     /**
      * get a titles with matching tag, commitment, username, location and texts in title
-     * @param tag, commitment, username, location, inName
+     * @param tag, @param commitment, @param username, 
+     * @param location, @param inName
      * @return List of ListingDTOs
      */
-
     @GetMapping("/listingpage")
     public List<ListingDTO> findListingByTitle(
         @RequestParam String tag,
@@ -116,10 +115,11 @@ public class ListingController {
 
     /**
      * creates a listing object
-     * @param userId, tagName, listing
+     * @param userId
+     * @param tagName
+     * @param listing
      * @return the created listing in a ListingDTO
      */
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/listingpage/newlisting")
     public ListingDTO addListing(@RequestParam Long userId, 
@@ -139,7 +139,8 @@ public class ListingController {
 
     /**
      * uploads an image
-     * @param id, image
+     * @param id
+     * @param image
      * @return the uploaded image
      */
     @ResponseStatus(HttpStatus.CREATED)
@@ -180,7 +181,8 @@ public class ListingController {
 
     /**
      * updates a specified listing
-     * @param id, newListingDetails
+     * @param id 
+     * @param newListingDetails
      * @return updated ListingDTO
      */
     @PutMapping("/listingpage/edit/{id}")

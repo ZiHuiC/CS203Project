@@ -46,6 +46,14 @@ public class ApplicationController {
         return new ApplicationDTO(application.get());
     }
 
+    /**
+     * List all applications that a user has applied for
+     * Able to accept listingId, to filter for applications applied to a
+     * specific listing by a user
+     * @param userId
+     * @param listingId
+     * @return list of all all application that a user has applied for as ApplicationDTO
+     */
     // show all the applications of this user
     // need do some security feature so that only this user and admin can see them
     @GetMapping("/user/applications")
@@ -70,6 +78,13 @@ public class ApplicationController {
         return retrivedApplications.stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
 
+    /**
+     * Add a new application with given userId, listingId and application details
+     * @param userId
+     * @param listingId
+     * @param application
+     * @return the newly added application as ApplicationDTO
+     */
     @PostMapping("/listingpage/{listingid}/newapplication")
     public ApplicationDTO addApplication(@RequestParam Long userId, @PathVariable Long listingid,
             @RequestBody Application application) {
@@ -87,6 +102,10 @@ public class ApplicationController {
         return new ApplicationDTO(applications.save(application));
     }
 
+    /**
+     * delete a specific application by id
+     * @param id
+     */
     @DeleteMapping("/listingpage/application/removal/{id}")
     public void deleteApplication(@PathVariable Long id){
         Optional<Application> searchedApp = applications.findApplicationById(id);
