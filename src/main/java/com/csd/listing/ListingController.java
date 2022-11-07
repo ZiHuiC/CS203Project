@@ -57,7 +57,6 @@ public class ListingController {
         @RequestParam(required = false) String... inName) {
         
         FilterDTO filters = new FilterDTO(commitment, tag, username, location);
-            System.out.println(filters.getCommitment()+ filters.getLocation());
         if (filters == null && inName == null)
             return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
