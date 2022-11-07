@@ -20,7 +20,7 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
 
     List<Listing> findListingByCommitment(String commitment);
     List<Listing> findByLister(User user);
-    
+
     List<Listing> findByListerAndTag(User user, Tag tag);
     List<Listing> findByListerAndCommitment(User user, String commitment);
     List<Listing> findByCommitmentAndTag(String commitment, Tag tags);
