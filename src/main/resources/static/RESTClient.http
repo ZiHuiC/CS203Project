@@ -55,12 +55,12 @@ GET http://localhost:8080/listingpage?inName=clean
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/listingpage?inName=clean
+GET http://localhost:8080/listingpage
 Content-Type: application/json
 
 {
     "username":"all",
-    "tag":"all",
+    "tag":"Clean Energy",
     "location":"all",
     "commitment":"all"
 }
@@ -110,11 +110,11 @@ Authorization: Basic admin@lendahand.com password
 }
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=4&tagName=Others
+POST http://localhost:8080/listingpage/newlisting?userId=4&tagName=Clean Energy
 Content-Type: application/json
 
 {
-    "name" : "string",
+    "name" : "clean",
     "des" : "string",
     "commitment": "ad-hoc",
     "location": "west"

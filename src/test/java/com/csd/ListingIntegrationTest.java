@@ -521,6 +521,7 @@ public class ListingIntegrationTest {
         requestParams.put("commitment", "commitment");
         requestParams.put("tag", "test");
         requestParams.put("username", "admin@lendahand.com");
+        requestParams.put("location", "all");
 
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
@@ -541,6 +542,7 @@ public class ListingIntegrationTest {
         requestParams.put("commitment", "commitment");
         requestParams.put("tag", "test");
         requestParams.put("username", "admin@lendahand.com");
+        requestParams.put("location", "all");
     
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")

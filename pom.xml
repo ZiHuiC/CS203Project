@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.csd</groupId>
 	<artifactId>csd</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>Lend a Hand</name>
 	<description>CS203 project</description>
 	<properties>
