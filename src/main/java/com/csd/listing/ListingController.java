@@ -49,7 +49,15 @@ public class ListingController {
     }
 
     @GetMapping("/listingpage")
-    public List<ListingDTO> findListingByTitle(@RequestBody(required = false) FilterDTO filters, @RequestParam(required = false) String... inName) {
+    public List<ListingDTO> findListingByTitle(
+        @RequestParam(required = true) String tag, 
+        @RequestParam(required = true) String commitment, 
+        @RequestParam(required = true) String username,  
+        @RequestParam(required = true) String location, 
+        @RequestParam(required = false) String... inName) {
+        
+        FilterDTO filters = new FilterDTO(commitment, tag, username, location);
+            System.out.println(filters.getCommitment()+ filters.getLocation());
         if (filters == null && inName == null)
             return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
