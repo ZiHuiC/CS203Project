@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-@CrossOrigin
 @RestController
 public class ListingController {
     private final ListingRepository listings;
