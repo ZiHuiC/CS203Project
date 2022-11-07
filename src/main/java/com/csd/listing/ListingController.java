@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,21 +43,52 @@ public class ListingController {
         this.userService = userService;
     }
 
+    /**
+     * get a specific listing by username
+     * @param userId
+     * @return all the listings made by the user
+     */
     @GetMapping("/listingpage/mylistings")
     public List<ListingDTO> findListingByUser(@RequestParam Long userId) {
         User user = userService.getUser(userId);
         return listings.findByLister(user).stream().map(ListingDTO::new).toList();
     }
 
+    /**
+     * check if a filter has all the parameters used
+     * @param filter
+     * @return true if the filter has all the parameters. false otherwise.
+     */
+    private static boolean isFilterByAll(FilterDTO filter){
+        return FilterDTO.isAll(filter.getCommitment()) 
+            && FilterDTO.isAll(filter.getLocation())
+            && FilterDTO.isAll(filter.getUsername())
+            && FilterDTO.isAll(filter.getTag());
+    }
+
+    /**
+     * get a titles with matching tag, commitment, username, location and texts in title
+     * @param tag, @param commitment, @param username, 
+     * @param location, @param inName
+     * @return List of ListingDTOs
+     */
     @GetMapping("/listingpage")
-    public List<ListingDTO> findListingByTitle(@RequestBody(required = false) FilterDTO filters, @RequestParam(required = false) String... inName) {
-        if (filters == null && inName == null)
+    public List<ListingDTO> findListingByTitle(
+        @RequestParam String tag,
+        @RequestParam String commitment,
+        @RequestParam String username,
+        @RequestParam String location,
+        @RequestParam(required = false) String... inName) {
+        
+        FilterDTO filters = new FilterDTO(commitment, tag, username, location);
+        
+        if (isFilterByAll(filters) && inName == null)
             return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
         List<ListingDTO> result = new ArrayList<>();
         List<ListingDTO> filteredListings;
 
-        if (filters != null) {
+        if (!isFilterByAll(filters)) {
             filteredListings = new ArrayList<>();
             // Filtering of listings
             for (Listing l: listings.findAll()) {
@@ -81,6 +113,13 @@ public class ListingController {
         return result;
     }
 
+    /**
+     * creates a listing object
+     * @param userId
+     * @param tagName
+     * @param listing
+     * @return the created listing in a ListingDTO
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/listingpage/newlisting")
     public ListingDTO addListing(@RequestParam Long userId, 
@@ -98,6 +137,12 @@ public class ListingController {
         }).orElseThrow(()->new TagNotFoundException(tagName));
     }
 
+    /**
+     * uploads an image
+     * @param id
+     * @param image
+     * @return the uploaded image
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value="/listingpage/newlisting/imageupload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ImageModel saveImage(@RequestParam Long id,
@@ -108,6 +153,11 @@ public class ListingController {
         return images.save(img);
     }
 
+    /**
+     * get a specific listing by id
+     * @param id
+     * @return the specified ListingDTO
+     */
     @GetMapping("/listingpage/{id}")
     public ListingDTO findListingById(@PathVariable Long id) {
         if (listings.findListingById(id).isEmpty())
@@ -116,6 +166,11 @@ public class ListingController {
         return new ListingDTO(listings.findListingById(id).get());
     }
 
+    /**
+     * get the image used in the listing
+     * @param id
+     * @return the specified image bytearray from the listing
+     */
     @GetMapping(value = "/listingpage/{id}/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getListingImage(@PathVariable Long id) throws IOException {
         if (listings.findListingById(id).isEmpty())
@@ -124,7 +179,12 @@ public class ListingController {
         return listings.findListingById(id).get().getPhoto().getPicByte();
     }
 
-
+    /**
+     * updates a specified listing
+     * @param id 
+     * @param newListingDetails
+     * @return updated ListingDTO
+     */
     @PutMapping("/listingpage/edit/{id}")
     public ListingDTO updateListingById(@PathVariable Long id, 
             @Valid @RequestBody ListingChangeDTO newListingDetails
@@ -152,6 +212,10 @@ public class ListingController {
         throw new UserNotMatchedException(oldListing.getLister().getId());
     }
 
+    /**
+     * delete a specific listing by id
+     * @param id
+     */
     @DeleteMapping("/listingpage/removal/{id}")
     public void deleteListing(@PathVariable Long id){
         Optional<Listing> searchedListing = listings.findListingById(id);
@@ -160,10 +224,11 @@ public class ListingController {
         Listing listing = searchedListing.get();
         String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        if (userService.getUser(authName).getId() == listing.getLister().getId()
+        if (Objects.equals(userService.getUser(authName).getId(), listing.getLister().getId())
                 || authName.compareTo("admin@lendahand.com") == 0)
             listings.deleteById(id);
         else 
             throw new UserNotMatchedException(listing.getLister().getId());
     }
+
 }

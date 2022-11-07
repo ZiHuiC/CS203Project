@@ -12,6 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface ApplicationRepository extends JpaRepository<Application, Long>{
     
     Optional<Application> findApplicationById(Long id);
-    Iterable<Application> findAllByApplicant(User applicant);
     List<Application> findApplicationByMessage(String message);
 }

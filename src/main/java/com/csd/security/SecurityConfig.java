@@ -77,6 +77,7 @@ public class SecurityConfig {
                 // .and().oauth2ResourceServer().jwt()
                 
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/user*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/user/removal/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/user/resetting/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage**").hasAnyRole("USER", "ADMIN")
@@ -107,28 +108,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // JwtDecoder jwtDecoder() {
-    //     /*
-    //     By default, Spring Security does not validate the "aud" claim of the token, to ensure that this token is
-    //     indeed intended for our app. Adding our own validator is easy to do:
-    //     */
-
-    //     NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
-    //             JwtDecoders.fromOidcIssuerLocation(issuer);
-
-    //     OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
-    //     OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
-    //     OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
-
-    //     jwtDecoder.setJwtValidator(withAudience);
-
-    //     return jwtDecoder;
-    // }
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5173"));
+        // Add in address for react
+        configuration.setAllowedOrigins(List.of("https://cs-203-frontend.vercel.app"));
         configuration.setAllowedMethods(
                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type",
