@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//to permit cross origin communication
-@CrossOrigin
 @RestController
 public class UserController {
     private UserService userService;
