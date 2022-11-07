@@ -87,7 +87,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         // Add in address for react
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5173"));
+        configuration.setAllowedOrigins(List.of("https://cs-203-frontend.vercel.app"));
         configuration.setAllowedMethods(
                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type",
