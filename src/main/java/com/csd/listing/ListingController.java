@@ -48,15 +48,30 @@ public class ListingController {
         return listings.findByLister(user).stream().map(ListingDTO::new).toList();
     }
 
+    private static boolean isFilterByAll(FilterDTO filter){
+        return FilterDTO.isAll(filter.getCommitment()) 
+            && FilterDTO.isAll(filter.getLocation())
+            && FilterDTO.isAll(filter.getUsername())
+            && FilterDTO.isAll(filter.getTag());
+    }
+
     @GetMapping("/listingpage")
-    public List<ListingDTO> findListingByTitle(@RequestBody(required = false) FilterDTO filters, @RequestParam(required = false) String... inName) {
-        if (filters == null && inName == null)
+    public List<ListingDTO> findListingByTitle(
+        @RequestParam(required = true) String tag, 
+        @RequestParam(required = true) String commitment, 
+        @RequestParam(required = true) String username,  
+        @RequestParam(required = true) String location, 
+        @RequestParam(required = false) String... inName) {
+        
+        FilterDTO filters = new FilterDTO(commitment, tag, username, location);
+        
+        if (isFilterByAll(filters) && inName == null)
             return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
 
         List<ListingDTO> result = new ArrayList<>();
         List<ListingDTO> filteredListings;
 
-        if (filters != null) {
+        if (!isFilterByAll(filters)) {
             filteredListings = new ArrayList<>();
             // Filtering of listings
             for (Listing l: listings.findAll()) {
@@ -166,4 +181,5 @@ public class ListingController {
         else 
             throw new UserNotMatchedException(listing.getLister().getId());
     }
+
 }
