@@ -454,11 +454,11 @@ public class ListingIntegrationTest {
 
     //must run without other listings
     @Test
-	public void findListingByTitle_NoParam_ReturnsSize2() throws Exception {
+	public void findListingByTitle_AllParam_ReturnsSize2() throws Exception {
         addListing1();
         addListing3();
         createTestTag2();
-        URI uri = new URI(baseUrl + port + "/listingpage");
+        URI uri = new URI(baseUrl + port + "/listingpage?username=all&tag=all&location=all&commitment=all");
     
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
@@ -470,7 +470,7 @@ public class ListingIntegrationTest {
 
     @Test
 	public void findListingByTitle_NotAuthenticated_Fail() throws Exception {
-        URI uri = new URI(baseUrl + port + "/listingpage");
+        URI uri = new URI(baseUrl + port + "/listingpage?username=all&tag=all&location=all&commitment=all");
     
         given()
             .accept("*/*").contentType("application/json")
@@ -481,11 +481,11 @@ public class ListingIntegrationTest {
 
     //must run without other listings
     @Test
-	public void findListingByTitle_InName_ReturnsSize2() throws Exception {
+	public void findListingByTitle_InNameAllParam_ReturnsSize2() throws Exception {
         addListing1();
         addListing3();
         createTestTag2();
-        URI uri = new URI(baseUrl + port + "/listingpage?inName=test");
+        URI uri = new URI(baseUrl + port + "/listingpage?username=all&tag=all&location=all&commitment=all&inName=test");
     
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
@@ -497,11 +497,11 @@ public class ListingIntegrationTest {
 
     //must run without other listings
     @Test
-	public void findListingByTitle_InNameNotThere_ReturnSize0() throws Exception {
+	public void findListingByTitle_InNameGivesNothing_ReturnSize0() throws Exception {
         addListing1();
         addListing3();
         createTestTag2();
-        URI uri = new URI(baseUrl + port + "/listingpage?inName=asdhauygsub");
+        URI uri = new URI(baseUrl + port + "/listingpage?username=all&tag=all&location=all&commitment=all&inName=asdhauygsub");
     
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
@@ -516,16 +516,11 @@ public class ListingIntegrationTest {
         addListing1();
         addListing3();
         createTestTag2();
-        URI uri = new URI(baseUrl + port + "/listingpage");
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("commitment", "commitment");
-        requestParams.put("tag", "test");
-        requestParams.put("username", "admin@lendahand.com");
-        requestParams.put("location", "all");
+        URI uri = new URI(baseUrl + port + 
+            "/listingpage?username=admin@lendahand.com&tag=test&location=all&commitment=commitment");
 
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
-            .body(requestParams.toJSONString())
             .get(uri).
         then().
             statusCode(200).
@@ -537,16 +532,11 @@ public class ListingIntegrationTest {
         addListing1();
         addListing3();
         createTestTag2();
-        URI uri = new URI(baseUrl + port + "/listingpage?inName=asdhauygsub");
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("commitment", "commitment");
-        requestParams.put("tag", "test");
-        requestParams.put("username", "admin@lendahand.com");
-        requestParams.put("location", "all");
+        URI uri = new URI(baseUrl + port + 
+            "/listingpage?username=admin@lendahand.com&tag=test&location=all&commitment=commitment&inName=asdhauygsub");
     
         given().auth().basic("admin@lendahand.com", "password")
             .accept("*/*").contentType("application/json")
-            .body(requestParams.toJSONString())
             .get(uri).
         then().
             statusCode(200).
