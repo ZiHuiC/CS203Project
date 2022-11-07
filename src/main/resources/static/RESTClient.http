@@ -59,15 +59,9 @@ GET http://localhost:8080/listingpage?tag=Others&commitment=All&username=All&loc
 Content-Type: application/json
 
 ###
-GET http://localhost:8080/listingpage
+GET http://localhost:8080/listingpage?username=all&tag=all&location=all&commitment=all&inName=w
 Content-Type: application/json
 
-{
-    "username":"all",
-    "tag":"Clean Energy",
-    "location":"all",
-    "commitment":"all"
-}
 ###
 GET http://localhost:8080/listingpage
 Content-Type: application/json
@@ -114,13 +108,13 @@ Authorization: Basic admin@lendahand.com password
 }
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=4&tagName=Clean Energy
+POST http://localhost:8080/listingpage/newlisting?userId=2&tagName=Coastal
 Content-Type: application/json
 
 {
     "name" : "clean",
     "des" : "string",
-    "commitment": "ad-hoc",
+    "commitment": "1day",
     "location": "west"
 }
 

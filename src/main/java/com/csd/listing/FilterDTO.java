@@ -34,7 +34,7 @@ public class FilterDTO {
                 '}';
     }
 
-    private static boolean isAll(String val) {
+    public static boolean isAll(String val) {
         return val.toLowerCase().equals("all");
     }
 
