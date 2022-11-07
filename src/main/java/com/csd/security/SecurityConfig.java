@@ -23,13 +23,6 @@ import java.util.List;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-    // @Value("${auth0.audience}")
-    // private String audience;
-
-    // @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-    // private String issuer;
-
     private final UserDetailsService userDetailsService;
 
     public SecurityConfig(UserDetailsService userSvc){
@@ -45,7 +38,6 @@ public class SecurityConfig {
      * Attaches the user details and the password encoder
      * @return
      */
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -56,14 +48,6 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    /**
-     * User role: can create/delete their listings, and sign up for others
-     * Admin role: can create/sign up/delete listings
-     * Anyone can view book/review
-     *
-     * Note: '*' matches zero or more characters, e.g., /books/* matches /books/20
-     '**' matches zero or more 'directories' in a path, e.g., /books/** matches /books/1/reviews
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -71,11 +55,6 @@ public class SecurityConfig {
                 .and() //  "and()"" method allows us to continue configuring the parent
                 //jwt authentication
                 .authorizeRequests()
-                // .mvcMatchers("/signup").permitAll()
-                // .mvcMatchers("/profiles").authenticated()
-                // .and().cors()
-                // .and().oauth2ResourceServer().jwt()
-                
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/user*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/user/removal/*").hasRole("ADMIN")
@@ -99,37 +78,15 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * @Bean annotation is used to declare a PasswordEncoder bean in the Spring application context.
-     * Any calls to encoder() will then be intercepted to return the bean instance.
-     */
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // JwtDecoder jwtDecoder() {
-    //     /*
-    //     By default, Spring Security does not validate the "aud" claim of the token, to ensure that this token is
-    //     indeed intended for our app. Adding our own validator is easy to do:
-    //     */
-
-    //     NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
-    //             JwtDecoders.fromOidcIssuerLocation(issuer);
-
-    //     OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
-    //     OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
-    //     OAuth2TokenValidator<Jwt> withAudience = new DelegatingOAuth2TokenValidator<>(withIssuer, audienceValidator);
-
-    //     jwtDecoder.setJwtValidator(withAudience);
-
-    //     return jwtDecoder;
-    // }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
+        // Add in address for react
         configuration.setAllowedOrigins(List.of("http://127.0.0.1:5173"));
         configuration.setAllowedMethods(
                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

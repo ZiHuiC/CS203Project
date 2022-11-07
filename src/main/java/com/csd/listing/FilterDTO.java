@@ -39,18 +39,18 @@ public class FilterDTO {
     }
 
     private static boolean isCommitment(String commitment, Listing l) {
-        return isAll(commitment) ? true : Objects.equals(commitment, l.getCommitment());
+        return isAll(commitment) || Objects.equals(commitment, l.getCommitment());
     }
 
     private static boolean isTag(String tag, Listing l) {
-        return isAll(tag) ? true : Objects.equals(tag, l.getTag().getValue());
+        return isAll(tag) || Objects.equals(tag, l.getTag().getValue());
     }
 
     private static boolean isUsername(String username, Listing l) {
-        return isAll(username) ? true : Objects.equals(username, l.getLister().getUsername());
+        return isAll(username) || Objects.equals(username, l.getLister().getUsername());
     }
 
     private static boolean isLocation(String location, Listing l) {
-        return isAll(location) ? true : Objects.equals(location, l.getLocation());
+        return isAll(location) || Objects.equals(location, l.getLocation());
     }
 }
