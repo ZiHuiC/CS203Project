@@ -77,6 +77,7 @@ public class SecurityConfig {
                 // .and().oauth2ResourceServer().jwt()
                 
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/user*").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/user/removal/*").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/user/resetting/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/listingpage**").hasAnyRole("USER", "ADMIN")

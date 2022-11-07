@@ -29,7 +29,7 @@ public class ListingController {
     private final ListingRepository listings;
     private final ImageRepository images;
     private final TagRepository tags;
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     public ListingController
             (ListingRepository listings,
