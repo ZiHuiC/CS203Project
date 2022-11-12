@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ListingChangeDTO {
+public class ListingChangeRequest {
     private String name;
     private String des;
     private Integer noOfParticipants;
@@ -14,7 +14,7 @@ public class ListingChangeDTO {
     private String location;
     private String tag;
 
-    public ListingChangeDTO(
+    public ListingChangeRequest(
             String name,
             String des,
             Integer noOfParticipants,

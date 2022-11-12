@@ -2,7 +2,7 @@ package com.csd.user;
 
 import javax.validation.Valid;
 
-import com.csd.user.UserDTOs.*;
+import com.csd.user.UserInputs.*;
 import com.csd.user.exceptions.UserExistsException;
 import com.csd.user.exceptions.UserNotFoundException;
 
@@ -95,7 +95,7 @@ public class UserController {
      * @return the updated UserDTO
      */
     @PutMapping("/user/resetting/name/{id}")
-    public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameDTO updatedUser) {
+    public UserDTO updateUserName(@PathVariable Long id, @Valid @RequestBody UserNameInput updatedUser) {
         return new UserDTO(userService.updateUserName(id, updatedUser));
     }
 
@@ -106,7 +106,7 @@ public class UserController {
      * @return the updated UserDTO
      */
     @PutMapping("/user/resetting/password/{id}")
-    public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDTO updatedUser) {
+    public UserDTO updateUserPassword(@PathVariable Long id, @Valid @RequestBody UserPasswordInput updatedUser) {
         return new UserDTO(userService.updateUserPassword(id, updatedUser));
     }
 
@@ -117,7 +117,7 @@ public class UserController {
      * @return the updated UserDTO
      */
     @PutMapping("/user/resetting/contact/{id}")
-    public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactDTO updatedUser) {
+    public UserDTO updateUserContact(@PathVariable Long id, @Valid @RequestBody UserContactInput updatedUser) {
         return new UserDTO(userService.updateUserContact(id, updatedUser));
     }
 
@@ -128,7 +128,7 @@ public class UserController {
      * @return the updated UserDTO
      */
     @PutMapping("/user/resetting/profile/{id}")
-    public UserDTO updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileDTO updatedUser) {
+    public UserDTO updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserProfileInput updatedUser) {
         return new UserDTO(userService.updateUserProfile(id, updatedUser));
     }
 }

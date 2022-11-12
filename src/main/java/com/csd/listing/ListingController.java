@@ -56,11 +56,11 @@ public class ListingController {
      * @param filter
      * @return true if the filter has all the parameters. false otherwise.
      */
-    private static boolean isFilterByAll(FilterDTO filter){
-        return FilterDTO.isAll(filter.getCommitment()) 
-            && FilterDTO.isAll(filter.getLocation())
-            && FilterDTO.isAll(filter.getUsername())
-            && FilterDTO.isAll(filter.getTag());
+    private static boolean isFilterByAll(FilterRequest filter){
+        return FilterRequest.isAll(filter.getCommitment()) 
+            && FilterRequest.isAll(filter.getLocation())
+            && FilterRequest.isAll(filter.getUsername())
+            && FilterRequest.isAll(filter.getTag());
     }
 
     /**
@@ -77,7 +77,7 @@ public class ListingController {
         @RequestParam String location,
         @RequestParam(required = false) String... inName) {
         
-        FilterDTO filters = new FilterDTO(commitment, tag, username, location);
+        FilterRequest filters = new FilterRequest(commitment, tag, username, location);
         
         if (isFilterByAll(filters) && inName == null)
             return listings.findAll().stream().map(ListingDTO::new).collect(Collectors.toList());
@@ -184,7 +184,7 @@ public class ListingController {
      */
     @PutMapping("/listingpage/edit/{id}")
     public ListingDTO updateListingById(@PathVariable Long id, 
-            @Valid @RequestBody ListingChangeDTO newListingDetails
+            @Valid @RequestBody ListingChangeRequest newListingDetails
             ) {
         Optional<Listing> searchedListing = listings.findListingById(id);
         if (searchedListing.isEmpty())

@@ -3,10 +3,10 @@ package com.csd.user;
 import java.util.List;
 import java.util.Optional;
 
-import com.csd.user.UserDTOs.UserContactDTO;
-import com.csd.user.UserDTOs.UserNameDTO;
-import com.csd.user.UserDTOs.UserPasswordDTO;
-import com.csd.user.UserDTOs.UserProfileDTO;
+import com.csd.user.UserInputs.UserContactInput;
+import com.csd.user.UserInputs.UserNameInput;
+import com.csd.user.UserInputs.UserPasswordInput;
+import com.csd.user.UserInputs.UserProfileInput;
 import com.csd.user.exceptions.UserNotFoundException;
 import com.csd.user.exceptions.UserNotMatchedException;
 
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUserContact(Long id, UserContactDTO userDTO){
+    public User updateUserContact(Long id, UserContactInput userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
             if (!isUserOrAdmin(id))
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUserName(Long id, UserNameDTO userDTO){
+    public User updateUserName(Long id, UserNameInput userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
             if (!isUserOrAdmin(id))
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUserPassword(Long id, UserPasswordDTO userDTO){
+    public User updateUserPassword(Long id, UserPasswordInput userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
             if (!isUserOrAdmin(id))
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUserProfile(Long id, UserProfileDTO userDTO) {
+    public User updateUserProfile(Long id, UserProfileInput userDTO) {
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()) {
             if (!isUserOrAdmin(id))

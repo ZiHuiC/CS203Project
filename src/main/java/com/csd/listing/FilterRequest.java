@@ -11,7 +11,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilterDTO {
+public class FilterRequest {
     private String commitment;
     private String tag;
     private String username;

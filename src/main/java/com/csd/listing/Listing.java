@@ -71,7 +71,7 @@ public class Listing {
         this.noOfParticipants = noOfParticipants;
     }
 
-    public void updateListing(ListingChangeDTO newListingDetails){
+    public void updateListing(ListingChangeRequest newListingDetails){
         this.name = newListingDetails.getName();
         this.des = newListingDetails.getDes();
         this.commitment = newListingDetails.getCommitment();

@@ -1,4 +1,4 @@
-package com.csd.user.UserDTOs;
+package com.csd.user.UserInputs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfileDTO {
+public class UserProfileInput {
     private String contact;
     private String firstname;
     private String lastname;

@@ -1,4 +1,4 @@
-package com.csd.user.UserDTOs;
+package com.csd.user.UserInputs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPasswordDTO {
+public class UserPasswordInput {
     private String password;
 }

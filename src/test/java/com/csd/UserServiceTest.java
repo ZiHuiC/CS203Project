@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.csd.user.*;
-import com.csd.user.UserDTOs.*;
+import com.csd.user.UserInputs.*;
 import com.csd.user.exceptions.UserNotFoundException;
 
 import org.junit.jupiter.api.Test;
@@ -143,7 +143,7 @@ public class UserServiceTest {
         User user = new User(
             "test", "password", "firstname",
             "lastname", "62353535");
-        UserContactDTO userDTO = new UserContactDTO(
+        UserContactInput userDTO = new UserContactInput(
              "12345678");
         when(users.findById(any(Long.class))).thenReturn(Optional.of(user));
         when(users.save(any(User.class))).thenReturn(user);
@@ -157,7 +157,7 @@ public class UserServiceTest {
 
     @Test
     void updateUserContact_UserDontExist_ThrowUserNotFoundException(){
-        UserContactDTO userDTO = new UserContactDTO(
+        UserContactInput userDTO = new UserContactInput(
              "12345678");
         when(users.findById(any(Long.class))).thenReturn(Optional.empty());
 
@@ -174,7 +174,7 @@ public class UserServiceTest {
         User user = new User(
             "test", "password", "firstname",
             "lastname", "62353535");
-        UserNameDTO userDTO = new UserNameDTO(
+        UserNameInput userDTO = new UserNameInput(
              "new", "name");
         when(users.findById(any(Long.class))).thenReturn(Optional.of(user));
         when(users.save(any(User.class))).thenReturn(user);
@@ -188,7 +188,7 @@ public class UserServiceTest {
 
     @Test
     void updateUserName_UserDontExist_ThrowUserNotFoundException(){
-        UserNameDTO userDTO = new UserNameDTO(
+        UserNameInput userDTO = new UserNameInput(
              "new", "name");
         when(users.findById(any(Long.class))).thenReturn(Optional.empty());
 
@@ -205,7 +205,7 @@ public class UserServiceTest {
         User user = new User(
             "test", "password", "firstname",
             "lastname", "62353535");
-        UserPasswordDTO userDTO = new UserPasswordDTO(
+        UserPasswordInput userDTO = new UserPasswordInput(
         "another password");
         when(users.findById(any(Long.class))).thenReturn(Optional.of(user));
         when(users.save(any(User.class))).thenReturn(user);
@@ -220,7 +220,7 @@ public class UserServiceTest {
 
     @Test
     void updateUserPassword_UserDontExist_ThrowUserNotFoundException(){
-        UserPasswordDTO userDTO = new UserPasswordDTO(
+        UserPasswordInput userDTO = new UserPasswordInput(
         "another password");
         when(users.findById(any(Long.class))).thenReturn(Optional.empty());
 
@@ -237,7 +237,7 @@ public class UserServiceTest {
         User user = new User(
             "test", "password", "firstname",
             "lastname", "62353535");
-        UserProfileDTO userDTO = new UserProfileDTO(
+        UserProfileInput userDTO = new UserProfileInput(
         "99125290", "new", "name");
         when(users.findById(any(Long.class))).thenReturn(Optional.of(user));
         when(users.save(any(User.class))).thenReturn(user);
@@ -251,7 +251,7 @@ public class UserServiceTest {
 
     @Test
     void updateUserProfile_UserDontExist_ThrowUserNotFoundException(){
-        UserProfileDTO userDTO = new UserProfileDTO(
+        UserProfileInput userDTO = new UserProfileInput(
         "99125290", "new", "name");
         when(users.findById(any(Long.class))).thenReturn(Optional.empty());
 

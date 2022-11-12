@@ -2,7 +2,8 @@ package com.csd.listing;
 
 import com.csd.application.ApplicationDTO;
 import com.csd.listing.tag.TagDTO;
-import com.csd.user.UserDTOs.UserDTO;
+import com.csd.user.UserDTO;
+
 import lombok.Getter;
 import lombok.Setter;
 

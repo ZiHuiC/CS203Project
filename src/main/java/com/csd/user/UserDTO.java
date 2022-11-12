@@ -1,6 +1,5 @@
-package com.csd.user.UserDTOs;
+package com.csd.user;
 
-import com.csd.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
