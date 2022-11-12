@@ -21,6 +21,19 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
+    private static final String[] GET_WHITELIST_URL = {
+        "/user*", "/listingpage**", "/listingpage/*",
+        "/application/*", "/user/applications*"
+    };
+    private static final String[] PUT_WHITELIST_URL = {
+        "/user/resetting/**", "/listingpage/edit/{id}"
+    };
+    private static final String[] POST_WHITELIST_URL = {
+        "/listingpage/newlisting**", "/listingpage/*/newapplication*"
+    };
+    private static final String[] DELETE_WHITELIST_URL = {
+        "/listingpage/removal/*", "/listingpage/application/removal/*"
+    };
 
     public SecurityConfig(UserDetailsService userSvc){
         this.userDetailsService = userSvc;
@@ -52,18 +65,11 @@ public class SecurityConfig {
                 .and() 
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/user*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, GET_WHITELIST_URL).hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/user/removal/*").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/user/resetting/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/listingpage**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/listingpage/edit/{id}").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/listingpage/newlisting**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/listingpage/removal/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/listingpage/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/application/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/user/applications*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/listingpage/*/newapplication*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/listingpage/application/removal/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, PUT_WHITELIST_URL).hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, POST_WHITELIST_URL).hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, DELETE_WHITELIST_URL).hasAnyRole("USER", "ADMIN")
                 .and()
                 .authenticationProvider(authenticationProvider()) //specifies the authentication provider for HttpSecurity
                 .csrf().disable() // CSRF protection is needed only for browser based attacks

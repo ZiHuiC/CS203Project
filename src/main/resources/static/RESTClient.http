@@ -57,6 +57,7 @@ Content-Type: application/json
 #get all listings
 GET http://localhost:8080/listingpage
 Content-Type: application/json
+Authorization: Basic admin@lendahand.com password
 
 ###
 GET http://localhost:8080/listingpage?inName=clean
