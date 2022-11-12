@@ -28,7 +28,7 @@ public class ApplicationController {
     private final ApplicationRepository applications;
     private final ListingRepository listings;
     private final UserRepository users;
-    private UserService userService;
+    private final UserService userService;
 
     public ApplicationController(ApplicationRepository applications, ListingRepository listings, 
             UserRepository users, UserService userService){
@@ -68,12 +68,7 @@ public class ApplicationController {
             var listing = listings.findById(listingId);
             if (listing.isEmpty())
                 throw new ListingNotFoundException(listingId);
-            Iterator<Application> itr = retrivedApplications.iterator();
-            while (itr.hasNext()){
-                Application app = itr.next();
-                if (app.getListing().getId() != listingId)
-                    itr.remove();
-            }
+            retrivedApplications.removeIf(app -> app.getListing().getId() != listingId);
         }
         return retrivedApplications.stream().map(ApplicationDTO::new).collect(Collectors.toList());
     }
