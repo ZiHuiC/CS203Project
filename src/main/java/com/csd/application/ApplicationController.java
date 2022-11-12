@@ -105,10 +105,8 @@ public class ApplicationController {
         if (searchedApp.isEmpty())
             throw new ApplicationNotFoundException(id);
         Application app = searchedApp.get();
-        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        if (userService.getUser(authName).getId() == app.getListing().getLister().getId()
-                || authName.compareTo("admin@lendahand.com") == 0)
+        if (userService.isUserOrAdmin(app.getListing().getLister().getId()))
             applications.deleteById(id);
         else 
             throw new UserNotMatchedException(app.getListing().getLister().getId());
