@@ -1,10 +1,10 @@
 
-#when gettin info about all user profiles
+#when getting info about all user profiles
 GET http://localhost:8080/profiles
 Content-Type: application/json
 
 ###
-#when gettin info about all user profiles
+#when getting info about all user profiles
 GET http://localhost:8080/profiles
 Content-Type: application/json
 Authorization: Basic admin@lendahand.com password
@@ -31,7 +31,7 @@ Content-Type: application/json
     "contact": "12345678"
 }
 ###
-#when gettin info adding a user
+#when getting info adding a user
 POST http://localhost:8080/newuser
 Content-Type: application/json
 

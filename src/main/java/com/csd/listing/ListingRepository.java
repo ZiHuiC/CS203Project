@@ -1,6 +1,5 @@
 package com.csd.listing;
 
-import com.csd.listing.tag.Tag;
 import com.csd.user.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;

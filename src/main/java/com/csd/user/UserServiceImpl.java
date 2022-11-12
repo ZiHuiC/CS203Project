@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
-    private UserRepository users;
-    private BCryptPasswordEncoder encoder;
+    private final UserRepository users;
+    private final BCryptPasswordEncoder encoder;
 
     public UserServiceImpl(UserRepository users, BCryptPasswordEncoder encoder){
         this.users = users;

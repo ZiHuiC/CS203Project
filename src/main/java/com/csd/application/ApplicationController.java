@@ -1,6 +1,5 @@
 package com.csd.application;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import com.csd.user.exceptions.UserNotFoundException;
 import com.csd.user.exceptions.UserNotMatchedException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +74,7 @@ public class ApplicationController {
     /**
      * Add a new application with given userId, listingId and application details
      * @param userId
-     * @param listingId
+     * @param listingid
      * @param application
      * @return the newly added application as ApplicationDTO
      */

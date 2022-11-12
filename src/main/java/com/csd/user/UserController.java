@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
-    private UserService userService;
-    private BCryptPasswordEncoder encoder;
+    private final UserService userService;
+    private final BCryptPasswordEncoder encoder;
 
     public UserController(UserService userService, BCryptPasswordEncoder encoder){
         this.userService = userService;

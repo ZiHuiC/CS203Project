@@ -18,7 +18,6 @@ public class CsdApplication {
 		ApplicationContext ctx = SpringApplication.run(CsdApplication.class, args);
 		// JPA user repository init
         UserRepository users = ctx.getBean(UserRepository.class);
-		ListingRepository listings = ctx.getBean(ListingRepository.class);
 		TagRepository tags = ctx.getBean(TagRepository.class);
 		BCryptPasswordEncoder encoder = ctx.getBean(BCryptPasswordEncoder.class);
         if (users.findByUsername("admin@lendahand.com").isEmpty())
