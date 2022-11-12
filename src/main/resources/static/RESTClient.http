@@ -24,11 +24,19 @@ Content-Type: application/json
     "password": "new"
 }
 ###
-PUT http://localhost:8080/user/reseting/contact/2
+PUT http://localhost:8080/user/resetting/contact/23
+Content-Type: application/json
+Authorization: Basic admin@lendahand.com password
+
+{
+    "contact": "12345688"
+}
+###
+PUT http://localhost:8080/user/resetting/profile/22
 Content-Type: application/json
 
 {
-    "contact": "12345678"
+    "contact": "12345688"
 }
 ###
 #when getting info adding a user
@@ -79,7 +87,7 @@ GET http://localhost:8080/listingpage/1
 Content-Type: application/json
 Authorization: Basic admin@lendahand.com password
 ###
-PUT  http://localhost:8080/listingpage/edit/1
+PUT  http://localhost:8080/listingpage/edit/45
 Content-Type: application/json
 Authorization: Basic string(email) string
 
@@ -93,22 +101,22 @@ Authorization: Basic string(email) string
     "tag" : "Others"
 }
 ###
-PUT  http://localhost:8080/listingpage/edit/4
+PUT  http://localhost:8080/listingpage/edit/46
 Content-Type: application/json
 Authorization: Basic admin@lendahand.com password
 
 {
     "name" : "w",
     "des" : "a",
-    "noOfParticipants" : 1,
+    "noOfParticipants" : 10,
     "photo":null,
     "commitment":"ad-hoc",
     "location":"east",
-    "tag" : "Others"
+    "tag" : "Marine"
 }
 ###
 #put user id in the {id}
-POST http://localhost:8080/listingpage/newlisting?userId=2&tagName=Coastal
+POST http://localhost:8080/listingpage/newlisting?userId=23&tagName=Coastal
 Content-Type: application/json
 
 {
@@ -124,8 +132,9 @@ GET http://localhost:8080/user/applications?userId=1
 Content-Type: application/json
 
 ###
-DELETE  http://localhost:8080/listingpage/removal/6
+DELETE  http://localhost:8080/listingpage/removal/47
 Content-Type: application/json
+Authorization: Basic string(email) string
 ###
 #put application id in the {id}
 GET http://localhost:8080/application/1

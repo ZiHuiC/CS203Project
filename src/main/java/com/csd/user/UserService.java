@@ -18,4 +18,5 @@ public interface UserService {
     User updateUserPassword(Long id, UserPasswordDTO userDTO);
     User updateUserProfile(Long id, UserProfileDTO userProfileDTO);
     void deleteUser(Long id);
+    boolean isUserOrAdmin(Long id);
 }

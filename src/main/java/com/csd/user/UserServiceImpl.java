@@ -8,7 +8,9 @@ import com.csd.user.UserDTOs.UserNameDTO;
 import com.csd.user.UserDTOs.UserPasswordDTO;
 import com.csd.user.UserDTOs.UserProfileDTO;
 import com.csd.user.exceptions.UserNotFoundException;
+import com.csd.user.exceptions.UserNotMatchedException;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +52,8 @@ public class UserServiceImpl implements UserService{
     public User updateUserContact(Long id, UserContactDTO userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
+            if (!isUserOrAdmin(id))
+                throw new UserNotMatchedException(id);
             User user = usersResult.get();
             user.setContactNo(userDTO.getContact());
             return users.save(user);
@@ -63,6 +67,8 @@ public class UserServiceImpl implements UserService{
     public User updateUserName(Long id, UserNameDTO userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
+            if (!isUserOrAdmin(id))
+                throw new UserNotMatchedException(id);
             User user = usersResult.get();
             user.setFirstname((userDTO.getFirstname()));
             user.setLastname((userDTO.getLastname()));
@@ -77,6 +83,8 @@ public class UserServiceImpl implements UserService{
     public User updateUserPassword(Long id, UserPasswordDTO userDTO){
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()){
+            if (!isUserOrAdmin(id))
+                throw new UserNotMatchedException(id);
             User user = usersResult.get();
             user.setPassword(encoder.encode(userDTO.getPassword()));
             return users.save(user);
@@ -90,6 +98,8 @@ public class UserServiceImpl implements UserService{
     public User updateUserProfile(Long id, UserProfileDTO userDTO) {
         Optional<User> usersResult = users.findById(id);
         if (usersResult.isPresent()) {
+            if (!isUserOrAdmin(id))
+                throw new UserNotMatchedException(id);
             User user = usersResult.get();
             user.setFirstname(userDTO.getFirstname());
             user.setLastname(userDTO.getLastname());
@@ -99,8 +109,15 @@ public class UserServiceImpl implements UserService{
             throw new UserNotFoundException(id);
     }
 
-        @Override
+    @Override
     public void deleteUser(Long id){
         users.deleteById(id);
+    }
+
+    @Override
+    public boolean isUserOrAdmin(Long id) {
+        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return (getUser(authName).getId() == id
+                || authName.compareTo("admin@lendahand.com") == 0);
     }
 }

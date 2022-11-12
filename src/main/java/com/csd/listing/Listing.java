@@ -71,4 +71,12 @@ public class Listing {
         this.noOfParticipants = noOfParticipants;
     }
 
+    public void updateListing(ListingChangeDTO newListingDetails){
+        this.name = newListingDetails.getName();
+        this.des = newListingDetails.getDes();
+        this.commitment = newListingDetails.getCommitment();
+        this.photo = newListingDetails.getPhoto();
+        this.location = newListingDetails.getLocation();
+        this.noOfParticipants = newListingDetails.getNoOfParticipants();
+    }
 }

@@ -1,7 +1,5 @@
 package com.csd;
 
-import com.csd.listing.Listing;
-import com.csd.listing.ListingRepository;
 import com.csd.listing.tag.Tag;
 import com.csd.listing.tag.TagRepository;
 import com.csd.user.User;

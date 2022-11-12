@@ -11,15 +11,12 @@ import com.csd.user.UserServiceImpl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -193,16 +190,9 @@ public class ListingController {
         if (searchedListing.isEmpty())
             throw new ListingNotFoundException(id);
         Listing oldListing = searchedListing.get();
-        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        if (userService.getUser(authName).getId() == oldListing.getLister().getId()
-                || authName.compareTo("admin@lendahand.com") == 0){
-            oldListing.setName(newListingDetails.getName());
-            oldListing.setDes(newListingDetails.getDes());
-            oldListing.setCommitment(newListingDetails.getCommitment());
-            oldListing.setPhoto(newListingDetails.getPhoto());
-            oldListing.setLocation(newListingDetails.getLocation());
-            oldListing.setNoOfParticipants(newListingDetails.getNoOfParticipants());
+        if (userService.isUserOrAdmin(oldListing.getLister().getId())){
+            oldListing.updateListing(newListingDetails);
 
             return tags.findTagByValue(newListingDetails.getTag()).map(tag -> {
                 oldListing.setTag(tag);
@@ -222,10 +212,8 @@ public class ListingController {
         if (searchedListing.isEmpty())
             throw new ListingNotFoundException(id);
         Listing listing = searchedListing.get();
-        String authName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        if (Objects.equals(userService.getUser(authName).getId(), listing.getLister().getId())
-                || authName.compareTo("admin@lendahand.com") == 0)
+        if (userService.isUserOrAdmin(listing.getLister().getId()))
             listings.deleteById(id);
         else 
             throw new UserNotMatchedException(listing.getLister().getId());

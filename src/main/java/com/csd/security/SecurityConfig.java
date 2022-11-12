@@ -49,8 +49,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic()
-                .and() //  "and()"" method allows us to continue configuring the parent
-                //jwt authentication
+                .and() 
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/profiles").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/user*").hasAnyRole("USER", "ADMIN")
